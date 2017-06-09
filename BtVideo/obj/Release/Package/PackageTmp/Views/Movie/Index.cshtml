@@ -2,15 +2,50 @@
 @{
     ViewBag.Title = ViewBag.PageTitle;
     Layout = "~/Views/Shared/_HomeLayout.cshtml";
-    ViewBag.MetaKeywords = "bt,BT,BT吧,BTBA,bt种子,BT种子下载,bt天堂,BT天堂,BT电影,电影天堂,bt电影,电影bt,bt电影天堂,bt电影下载,BT迅雷下载,迅雷bt种子下载,迅雷bt下载,迅雷bt电影下载,迅雷下载";
-    ViewBag.MetaDescription = "BT吧每日更新2017年最新电影电视剧，720p|1080p|4K 等超高清分辨率电影电视剧迅雷下载、bt种子网盘离线下载等资源。";
+    ViewBag.MetaKeywords = "114bt电影,BT,BT吧,BTBA,bt种子,BT种子下载,bt天堂,BT天堂,BT电影,电影天堂,bt电影,电影bt,bt电影天堂,bt电影下载,BT迅雷下载,迅雷bt种子下载,迅雷bt下载,迅雷bt电影下载,迅雷下载";
+    ViewBag.MetaDescription = "114bt电影每日更新2017年最新电影电视剧，720p|1080p|4K 等超高清分辨率电影电视剧迅雷下载、bt种子网盘离线下载等资源。";
 }
+
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+            <a href="/8">
+                <img src="~/Content/Images/1e33cee08f34e707.jpg" class="img-responsive" alt="速度与激情8">
+                <div class="carousel-caption">
+                    速度与激情8
+                </div>
+            </a>
+        </div>
+                <div class="item">
+            <a href="/7">
+                <img src="~/Content/Images/8f6761a0d4edebad.jpg" class="img-responsive" alt="摔跤吧，爸爸！">
+                <div class="carousel-caption">
+                    摔跤吧，爸爸！
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
 
 <section class="col-lg-9 col-md-12">
     <h3 class="h3-cat-list">
-        @*<a class="pull-right hidden-xs" href="" target="_blank" title="Subscribe Top 20 Posts">
-            <i class="fa fa-rss"></i>
-        </a>*@
         <span>
             All Posts
         </span>
@@ -22,27 +57,37 @@
     {
         <article class="article-post-summary">
             <div class="post-date-box hidden-xs">
-                <h1 class="post-date-day">@item.DateCreated.Day</h1>
+                <h1 class="post-date-day">@item.Grade</h1>
                 <div class="post-date-month">
-                    @item.DateCreated.Month
+                    @item.PageVisits
                 </div>
             </div>
             <div class="post-summary-box">
                 <time datetime="@item.DateCreated" class="none">@item.DateCreated</time>
 
-                <h4 class="post-summary-title">
-                    <a href="/@item.Slug" title="@item.MovieTitle">@item.MovieTitle</a>
-                </h4>
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <a href="/@item.Slug" title="@item.MovieTitle">
+                            <img src="@item.PictureFolder/@item.PictureThumbnail" class="img-responsive" style="width: 100%;" />
+                        </a>
+                    </div>
+                    <div class="col-md-9 post-summary-text">
 
-                <p class="post-summary-text">
-                    @item.Tags
-                </p>
-
-                <div class="post-summary-tags">
-                    @foreach (var tag in item.MovieTags)
-                    {
-                        <a href="/tags/@(tag.Tag)" title="@tag.Tag" class="post-summary-tag">@tag.Tag</a>
-                    }
+                        <a href="/@item.Slug" title="@item.MovieTitle">
+                            <h4 class="post-summary-title">
+                                @item.MovieTitle
+                            </h4>
+                            <p>
+                                @item.MetaDescription
+                            </p>
+                        </a>
+                        <div class="post-summary-tags">
+                            @foreach (var tag in item.MovieTags)
+                            {
+                                <a href="/tags/@(tag.Tag)" title="@tag.Tag" class="post-summary-tag">@tag.Tag</a>
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
         </article>

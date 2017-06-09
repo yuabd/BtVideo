@@ -161,6 +161,10 @@
     <Content Include="App_Themes\home\scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="App_Themes\home\scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="App_Themes\home\scripts\prettify.js" />
+    <Content Include="Content\Images\1e33cee08f34e707.jpg" />
+    <Content Include="Content\Images\8f6761a0d4edebad.jpg" />
+    <Content Include="Content\Pictures\Blog\201706\5-5.jpg" />
+    <Content Include="Content\Pictures\Blog\Source\201706\5-5.jpg" />
     <Content Include="Global.asax" />
     <Content Include="Plugins\xheditor\xheditor-1.1.14-zh-cn.min.js" />
     <Content Include="Plugins\xheditor\xheditor_emot\default\angry.gif" />
@@ -353,6 +357,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\BlogController.cs" />
     <Compile Include="Areas\Admin\Controllers\LinksController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SettingsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MovieController.cs" />
@@ -360,6 +365,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\GlobalHelper.cs" />
+    <Compile Include="Helpers\HttpErrorModule.cs" />
     <Compile Include="Helpers\Utilities.cs" />
     <Compile Include="Migrations\201706041100220_InitialCreate.cs" />
     <Compile Include="Migrations\201706041100220_InitialCreate.Designer.cs">
@@ -412,6 +418,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BlogService.cs" />
     <Compile Include="Services\MembershipService.cs" />
+    <Compile Include="Services\SiteService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -462,6 +469,7 @@
     <Content Include="Areas\Admin\Views\Blog\MovieLinks.cshtml" />
     <Content Include="Areas\Admin\Views\Blog\AddMovieLink.cshtml" />
     <Content Include="Areas\Admin\Views\Blog\UpdateMovieLink.cshtml" />
+    <Content Include="Content\Bt\4\4-【BluRay 720p】深夜食堂电影版2・深夜食堂 .2016.4.38GBBT种子下载.torrent" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Home\About.cshtml" />
     <None Include="Web.Debug.config">

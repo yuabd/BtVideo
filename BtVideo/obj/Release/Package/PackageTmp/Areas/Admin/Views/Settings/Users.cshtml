@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BtVideo.Models.User>
+﻿@model IEnumerable<Studio.Models.User>
 
 @{
     ViewBag.Title = "用户管理";
@@ -81,7 +81,7 @@
 		 <div class="row">
 			<label>头衔:</label>
 			@{int i=0;
-				foreach (var item in BtVideo.Helpers.ListHelper.GetRoleList())
+				foreach (var item in Studio.Helpers.ListHelper.GetRoleList())
 				{
 					<input id="@item.Text" name="UserRole[@i]" value="@item.Value" type="checkbox" /> @item.Text
 					i++;

@@ -53,9 +53,10 @@
                         </span>
                     </div>
                     <ul class="list-inline">
-                        <li>
-                            @Model.Blog.Tags
-                        </li>
+                        @foreach (var item in Model.Blog.MovieTags)
+                        {
+                            <li>@item.Tag</li>
+                        }
                     </ul>
                 </section>
             </div>
@@ -67,30 +68,29 @@
             </div>
             <div class="col-sm-8">
                 <h1>@Model.Blog.MovieTitle</h1>
-                <div class="col-sm-12">
-                    <div class="col-sm-2">更新:</div>
-                    <div class="col-sm-10">@Model.Blog.DateCreated.ToString("yyyy-MM-dd HH:mm:ss")</div>
-                </div>
-                <div class="col-sm-12">
-                    <div class="col-sm-2">标签:</div>
-                    <div class="col-sm-10">@Model.Blog.Tags</div>
-                </div>
-                <div class="col-sm-12">
-                    <div class="col-sm-2">地区:</div>
-                    <div class="col-sm-10">@Model.Blog.MovieArea.AreaName</div>
-                </div>
-                <div class="col-sm-12">
-                    <div class="col-sm-2">导演:</div>
-                    <div class="col-sm-10">@Model.Blog.Director</div>
-                </div>
-                <div class="col-sm-12">
-                    <div class="col-sm-2">主演:</div>
-                    <div class="col-sm-10">@Model.Blog.Stars</div>
-                </div>
-                <div class="col-sm-12">
-                    <div class="col-sm-2">上映时间:</div>
-                    <div class="col-sm-10">@Model.Blog.ShowDate</div>
-                </div>
+                <div class="col-sm-2">更新:</div>
+                <div class="col-sm-10">@Model.Blog.DateCreated.ToString("yyyy-MM-dd HH:mm:ss")</div>
+                <br />
+                <br />
+                @*<div class="col-sm-2">标签:</div>
+                <div class="col-sm-10">@Model.Blog.Tags</div>
+                <br />
+                <br />*@
+                <div class="col-sm-2">地区:</div>
+                <div class="col-sm-10">@Model.Blog.MovieArea.AreaName</div>
+                <br />
+                <br />
+                <div class="col-sm-2">导演:</div>
+                <div class="col-sm-10">@Model.Blog.Director</div>
+                <br />
+                <br />
+                <div class="col-sm-2">主演:</div>
+                <div class="col-sm-10">@Model.Blog.Stars</div>
+                <br />
+                <br />
+                <div class="col-sm-2">上映日期:</div>
+                <div class="col-sm-10">@Model.Blog.ShowDate.ToString("yyyy-MM-dd")</div>
+                <br />
             </div>
             <div class="col-sm-12">
                 <h2>剧情介绍：</h2>
@@ -109,7 +109,7 @@
                 <h2>种子：</h2>
                 @foreach (var item in Model.Blog.MovieLinks)
                 {
-                    <a href="@(item.PictureFolder + "/"+ @item.LinkUrl)" target="_blank">@item.LinkName</a>
+                    <a href="@(item.PictureFolder + "/"+ @item.LinkUrl)" target="_blank">@item.LinkName</a><br />
                 }
             </div>
         </section>
@@ -125,7 +125,7 @@
                 <div>
                     @if (Model.PreNextBlog.PreBlog != null)
                     {
-                        <a href="/Blog/Post/@(Model.PreNextBlog.PreBlog.Slug).html" title="@Model.PreNextBlog.PreBlog.Title">@Model.PreNextBlog.PreBlog.Title</a>
+                        <a href="/@(Model.PreNextBlog.PreBlog.Slug)" title="@Model.PreNextBlog.PreBlog.Title">@Model.PreNextBlog.PreBlog.Title</a>
                     }
                     else
                     {
@@ -141,7 +141,7 @@
                 <div>
                     @if (Model.PreNextBlog.NextBlog != null)
                     {
-                        <a href="/Blog/Post/@(Model.PreNextBlog.NextBlog.Slug).html" title="@Model.PreNextBlog.NextBlog.Title">@Model.PreNextBlog.NextBlog.Title</a>
+                        <a href="/@(Model.PreNextBlog.NextBlog.Slug)" title="@Model.PreNextBlog.NextBlog.Title">@Model.PreNextBlog.NextBlog.Title</a>
                     }
                     else
                     {

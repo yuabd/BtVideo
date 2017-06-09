@@ -5,8 +5,8 @@
         $("#Blog_DateCreated,#Blog_ShowDate").datepicker();
         @foreach (var item in Model.Blog.MovieCategoryJoins ?? new List<BtVideo.Models.MovieCategoryJoin>())
         {
-            @:$("#@item.CategoryID").prop("checked","checked");;
-        }
+            @:$("#@item.CategoryID").prop("checked", "checked");;
+                }
     });
 </script>
 
@@ -39,6 +39,20 @@
             {
                 <input type="checkbox" name="Categories" value="@item.CategoryID" id="@item.CategoryID" /> <label for="@item.CategoryID">@item.CategoryName</label>
             }
+        </div>
+    </div>
+</div>
+<div class="section">
+    <div class="section-header">
+        <h3>地区</h3>
+    </div>
+    <div class="section-body">
+        <div class="row">
+            @Html.DropDownListFor(m => m.Blog.AreaID, new BtVideo.Services.BlogService().GetAreas().Select(m => new SelectListItem()
+       {
+           Text = m.AreaName,
+           Value = m.AreaID.ToString()
+       }).ToList())
         </div>
     </div>
 </div>
@@ -129,7 +143,6 @@
             <label>磁力链接:</label>
             @Html.TextBoxFor(m => m.Blog.Magnet, new { @class = "large" })
         </div>
-        @Html.HiddenFor(m => m.Blog.AreaID)
     </div>
 </div>
 <div class="section">
@@ -155,10 +168,10 @@
             <dfn>如为空,将使用本文章的tags </dfn>
         </div>
         @*<div class="row">
-            <label>Url:</label>
-            @Html.TextBoxFor(m => m.Blog.Slug, new { @class = "large" })
-            @Html.ValidationMessageFor(m => m.Blog.Slug)
-            <dfn>如为空,将使用本文章标题</dfn>
-        </div>*@
+                <label>Url:</label>
+                @Html.TextBoxFor(m => m.Blog.Slug, new { @class = "large" })
+                @Html.ValidationMessageFor(m => m.Blog.Slug)
+                <dfn>如为空,将使用本文章标题</dfn>
+            </div>*@
     </div>
 </div>

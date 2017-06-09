@@ -3,7 +3,10 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title | 114bt | 最新720P、1080P高清电影种子下载网站 | bt.114.center。</title>
+    <title>@ViewBag.Title | 114bt电影 | 最新720P、1080P高清电影种子下载网站 | 114.center </title>
+
+    <meta name="keywords" content="@ViewBag.MetaKeywords" />
+    <meta name="description" content="@ViewBag.MetaDescription" />
 
     @Styles.Render("~/bundles/bootstrap")
 
@@ -13,7 +16,7 @@
 <body>
     <header class="ediblog-header">
         <h1 class="hidden">
-            <a href="/">yuabd</a>
+            <a href="/">114bt电影</a>
         </h1>
         <div class="nav-container navbar-fixed-top">
             <div class="container">
@@ -26,10 +29,10 @@
                         </button>
                         <div class="animbrand">
                             <a class="navbar-brand animate hidden-xs" id="yuabd-logo" href="/">
-                                YUABD
+                                114bt电影
                             </a>
                         </div>
-                        <a class="navbar-brand logo-mobile visible-xs" href="/">YUABD</a>
+                        <a class="navbar-brand logo-mobile visible-xs" href="/">114bt电影</a>
                     </div>
 
                     <div id="slidemenu">
@@ -49,26 +52,6 @@
                             </div>
                         </form>
                         <ul class="nav navbar-nav">
-                            @*<li class="dropdown">
-                                <a href="#" class="dropdown-toggle animate" data-toggle="dropdown">
-                                    <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
-                                    POSTS
-                                    <b class="caret"></b>
-                                </a>
-
-                                <ul class="dropdown-menu category-menu" id="archives">
-                                    <li><a href="/list">All Posts</a></li>
-                                    @foreach (var item in new BtVideo.Services.BlogService().GetBlogCategories().ToList())
-                                    {
-                                        <li>
-                                            <a href="/list/@(item.CategoryID)"
-                                               title="@item.CategoryName">
-                                                @item.CategoryName
-                                            </a>
-                                        </li>
-                                    }
-                                </ul>
-                            </li>*@
                             <li>
                                 <a href="/list3" title="电影" class="animate">
                                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
@@ -96,12 +79,10 @@
                                     </a>
                                 </li>
                             }*@
-                            
-
                             <li>
                                 <a href="/about" class="animate">
                                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                    About
+                                    关于我们
                                 </a>
                             </li>
                         </ul>
@@ -113,116 +94,191 @@
     <div id="page-cover" class="visible-xs">
     </div>
     <div id="page-content" class="content">
-        <section class="mobile-aboutme hidden-lg">
-            <section class="blog-info-phone visible-xs">
-                <div class="card-bkimg-container">
-                    <img class="card-bkimg" alt="" src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg">
-                </div>
-                <div class="media">
-                    <a class="pull-left" href="/about">
-                        <img src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg" alt="Yuabd" class="media-object img-circle blogger-head-pic">
-                    </a>
-                    <div class="media-body">
-                        <p>
-                            .NET, Web Developer
-                        </p>
-                        <div class="btn-group btn-group-justified">
-                            <a href="mailto:yuabd1991@gmail.com" class="btn btn-success">
-                                <i class="fa fa-envelope"></i>
-                                Email
-                            </a>
-                            <a href="https://github.com/yuabd" target="_blank" class="btn btn-primary" title="GitHub">
-                                <i class="fa fa-github"></i>
-                                GitHub
-                            </a>
-                            <a href="http://weibo.com/235755671" target="_blank" class="btn btn-warning">
-                                <i class="fa fa-weibo"></i>
-                                Weibo
-                            </a>
+        @*<section class="mobile-aboutme hidden-lg">
+                <section class="blog-info-phone visible-xs">
+                    <div class="card-bkimg-container">
+                        <img class="card-bkimg" alt="" src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg">
+                    </div>
+                    <div class="media">
+                        <a class="pull-left" href="/about">
+                            <img src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg" alt="114bt电影" class="media-object img-circle blogger-head-pic">
+                        </a>
+                        <div class="media-body">
+                            <p>
+                                .NET, Web Developer
+                            </p>
+                            <div class="btn-group btn-group-justified">
+                                <a href="mailto:114bt电影1991@gmail.com" class="btn btn-success">
+                                    <i class="fa fa-envelope"></i>
+                                    Email
+                                </a>
+                                <a href="https://github.com/114bt电影" target="_blank" class="btn btn-primary" title="GitHub">
+                                    <i class="fa fa-github"></i>
+                                    GitHub
+                                </a>
+                                <a href="http://weibo.com/235755671" target="_blank" class="btn btn-warning">
+                                    <i class="fa fa-weibo"></i>
+                                    Weibo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="container visible-md visible-sm animate">
+                    <div class="media">
+                        <a class="pull-left" href="/about">
+                            <img src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg" alt="114bt电影" class="media-object img-circle blogger-head-pic">
+                        </a>
+                        <div class="media-body">
+                            <p>
+                                .NET, Web Developer
+                            </p>
+                            <div class="btn-group">
+                                <a href="mailto:114bt电影1991@gmail.com" class="btn btn-success">
+                                    <i class="fa fa-envelope"></i>
+                                    Email
+                                </a>
+                                <a href="https://github.com/114bt电影" target="_blank" class="btn btn-primary" title="GitHub">
+                                    <i class="fa fa-github"></i>
+                                    GitHub
+                                </a>
+                                <a href="http://weibo.com/235755671" target="_blank" class="btn btn-warning">
+                                    <i class="fa fa-weibo"></i>
+                                    Weibo
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </section>
 
-            <div class="container visible-md visible-sm animate">
-                <div class="media">
-                    <a class="pull-left" href="/about">
-                        <img src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg" alt="yuabd" class="media-object img-circle blogger-head-pic">
-                    </a>
-                    <div class="media-body">
-                        <p>
-                            .NET, Web Developer
-                        </p>
-                        <div class="btn-group">
-                            <a href="mailto:yuabd1991@gmail.com" class="btn btn-success">
-                                <i class="fa fa-envelope"></i>
-                                Email
-                            </a>
-                            <a href="https://github.com/yuabd" target="_blank" class="btn btn-primary" title="GitHub">
-                                <i class="fa fa-github"></i>
-                                GitHub
-                            </a>
-                            <a href="http://weibo.com/235755671" target="_blank" class="btn btn-warning">
-                                <i class="fa fa-weibo"></i>
-                                Weibo
-                            </a>
-                        </div>
+                <section class="blog-info-desktop-lg visible-lg">
+                    <div class="card-bkimg-container">
+                        <img class="card-bkimg" alt="" src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg">
                     </div>
-                </div>
-            </div>
-
-            <section class="blog-info-desktop-lg visible-lg">
-                <div class="card-bkimg-container">
-                    <img class="card-bkimg" alt="" src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg">
-                </div>
-                <div class="blog-info-photo-text text-center">
-                    <a href="/about">
-                        <img src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg" alt="yuabd" class="media-object img-circle center-block blogger-head-pic">
-                    </a>
-                    <div class="bor"></div>
-                    <div>
-                        <h3 class="marginzero">
-                            Yuabd
-                        </h3>
+                    <div class="blog-info-photo-text text-center">
+                        <a href="/about">
+                            <img src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg" alt="114bt电影" class="media-object img-circle center-block blogger-head-pic">
+                        </a>
                         <div class="bor"></div>
-                        <p>
-                            .NET, Web Developer
-                        </p>
+                        <div>
+                            <h3 class="marginzero">
+                                114bt电影
+                            </h3>
+                            <div class="bor"></div>
+                            <p>
+                                .NET, Web Developer
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <div class="bor"></div>
-                <div class="btn-group btn-group-justified">
-                    <a href="mailto:yuabd1991@gmail.com" class="btn btn-success">
-                        <i class="fa fa-envelope"></i>
-                        Email
-                    </a>
-                    <a href="https://github.com/yuabd" target="_blank" class="btn btn-primary">
-                        <i class="fa fa-github"></i>
-                        GitHub
-                    </a>
-                    <a href="http://weibo.com/235755671" target="_blank" class="btn btn-warning">
-                        <i class="fa fa-weibo"></i>
-                        Weibo
-                    </a>
-                </div>
-            </section>
-        </section>
+                    <div class="bor"></div>
+                    <div class="btn-group btn-group-justified">
+                        <a href="mailto:114bt电影1991@gmail.com" class="btn btn-success">
+                            <i class="fa fa-envelope"></i>
+                            Email
+                        </a>
+                        <a href="https://github.com/114bt电影" target="_blank" class="btn btn-primary">
+                            <i class="fa fa-github"></i>
+                            GitHub
+                        </a>
+                        <a href="http://weibo.com/235755671" target="_blank" class="btn btn-warning">
+                            <i class="fa fa-weibo"></i>
+                            Weibo
+                        </a>
+                    </div>
+                </section>
+            </section>*@
         <div class="container">
             <div class="row">
                 @RenderBody()
             </div>
         </div>
 
+        <footer>
+
+            <div class="container">
+                <div class="row">
+                    免责声明：本站所有资源均收集自互联网，没有提供影片资源存储，也未参与录制、上传。若本站收录的资源涉及您的版权或知识产权或其他利益，请附上版权证明邮件告知，在收到邮件后72小时内删除。
+                    Copyright © 2017 [114bt电影] 管理员邮箱：yuabd1991#gmail.com(#=@@)
+                    @*<div class="col-md-3 col-sm-3">
+                            <h4 class="hidden-xs">Copyright</h4>
+                            <div>© 2009 - 2017 edi.wang</div>
+                            <small class="hidden-xs">Design and Devloped by Edi Wang</small>
+                            <br class="hidden-xs">
+                            <br class="hidden-xs">
+                            <small class="hidden-xs">
+                                Version 8.2.6367.27711
+                            </small>
+
+                            <span class="hidden-xs">
+                                <i class="fa fa-fw fa-user"></i>
+                            </span>
+                            <a href="" id="a-sign-in" class="hidden-xs small" data-toggle="modal" data-target="#signInModal">Sign In</a>
+
+                        </div>
+
+                        <div class="col-md-3 col-sm-3 hidden-xs">
+                            <h4>Powered By</h4>
+                            <div>
+                                <a href="https://www.microsoft.com/net" target="_blank"><img src="/content/images/net.svg" height="55" width="55"></a>
+                                <a href="https://www.microsoft.com/net/tutorials/csharp/getting-started" target="_blank"><img src="/content/images/csharp.svg" height="55" width="55"></a>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3 col-sm-3 hidden-xs">
+                            <h4>Subscription</h4>
+                            <ul class="list-unstyled">
+                                <li>
+                                    <a class="footer-opml-link hidden-xs" href="/opml.axd" target="_blank">
+                                        <i class="fa fa-fw fa-code"></i>
+                                        OPML
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" data-toggle="modal" data-target="#subscriptionmodal">
+                                        <i class="fa fa-fw fa-rss"></i>
+                                        RSS / Atom
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="col-md-3 col-sm-3">
+                            <h4 class="hidden-xs">Follow Me</h4>
+                            <div class="qrcode-link">
+                                <a title="QR Code" data-toggle="modal" data-target="#qrmodal">
+                                    <i class="fa fa-fw fa-qrcode"></i>
+                                </a>
+
+                                <a title="Official WeChat" data-toggle="modal" data-target="#wechatmodal">
+                                    <i class="fa fa-fw fa-wechat"></i>
+                                </a>
+
+                                <a href="http://weibo.com/wyjexplorer" target="_blank">
+                                    <i class="fa fa-fw fa-weibo"></i>
+                                </a>
+
+                                <a href="https://github.com/EdiWang" target="_blank">
+                                    <i class="fa fa-fw fa-github"></i>
+                                </a>
+                            </div>
+                        </div>*@
+                </div>
+            </div>
+
+        </footer>
+
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", false)
 
-    <script type="text/javascript">
+    <script>
         var _hmt = _hmt || [];
         (function () {
             var hm = document.createElement("script");
-            hm.src = "https://hm.baidu.com/hm.js?80fb7adcf09e179855b314a2f2c794de";
+            hm.src = "https://hm.baidu.com/hm.js?d033eb598eef79d3f4a713a85767efdd";
             var s = document.getElementsByTagName("script")[0];
             s.parentNode.insertBefore(hm, s);
 
@@ -238,5 +294,6 @@
             s.parentNode.insertBefore(bp, s);
         })();
     </script>
+
 </body>
 </html>
