@@ -1,0 +1,213 @@
+﻿@model BtVideo.Models.Site.BlogViewModel
+@{
+    ViewBag.Title = Model.Blog.MovieTitle;
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    ViewBag.MetaKeywords = Model.Blog.MetaKeywords;
+    ViewBag.MetaDescription = Model.Blog.MetaDescription;
+}
+@section head {
+    @Styles.Render("~/bundles/postcss")
+}
+@section scripts{
+    @Scripts.Render("~/bundles/post")
+
+    <script>
+        $(function () {
+            $("img").lazyload({
+                effect: "fadeIn"
+            });
+
+            $("#Captcha").on("click", function () { $(this).attr("src", "/Movie/Captcha"); })
+        });
+    </script>
+}
+
+<section class="col-lg-9 col-md-12">
+    <article>
+        <header class="post-header">
+            <h3 class="post-title">
+                @Model.Blog.MovieTitle
+            </h3>
+            <hr class="hidden-xs post-header-hr">
+
+            <div class="visible-xs">
+                <div class="post-publish-info">
+                    <time datetime="@Model.Blog.DateCreated">@Model.Blog.DateCreated</time>
+                </div>
+            </div>
+
+            <div class="hidden-xs post-publish-info">
+                <span>
+                    <time datetime="@Model.Blog.DateCreated">@Model.Blog.DateCreated</time>
+                </span>
+                <span class="badge pull-right">@Model.Blog.PageVisits Reads</span>
+            </div>
+            <div class="hidden-print">
+                <section class="post-cat-tag-info">
+                    <div class="button pull-right hidden-xs">
+                        <span class="toptags-list toptags-list-sm">
+                            @foreach (var item in Model.Blog.MovieTags)
+                            {
+                                <a href="/tags/@(item.Tag)" rel="0">@item.Tag</a>
+                            }
+                        </span>
+                    </div>
+                    <ul class="list-inline">
+                        <li>
+                            @Model.Blog.Tags
+                        </li>
+                    </ul>
+                </section>
+            </div>
+            <hr class="post-header-hr mt0">
+        </header>
+        <section class="post-content clearfix">
+            <div class="col-sm-4">
+                <img src="@(Model.Blog.PictureFolder + "/" + @Model.Blog.PictureThumbnail)" style="width: 100%;" />
+            </div>
+            <div class="col-sm-8">
+                <h1>@Model.Blog.MovieTitle</h1>
+                <div class="col-sm-12">
+                    <div class="col-sm-2">更新:</div>
+                    <div class="col-sm-10">@Model.Blog.DateCreated.ToString("yyyy-MM-dd HH:mm:ss")</div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-2">标签:</div>
+                    <div class="col-sm-10">@Model.Blog.Tags</div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-2">地区:</div>
+                    <div class="col-sm-10">@Model.Blog.MovieArea.AreaName</div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-2">导演:</div>
+                    <div class="col-sm-10">@Model.Blog.Director</div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-2">主演:</div>
+                    <div class="col-sm-10">@Model.Blog.Stars</div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-2">上映时间:</div>
+                    <div class="col-sm-10">@Model.Blog.ShowDate</div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <h2>剧情介绍：</h2>
+                @Html.Raw(Model.Blog.MovieContent)
+            </div>
+
+            <div class="col-sm-12">
+                <h2>下载链接：</h2>
+                @foreach (var item in Model.Blog.MovieLinks)
+                {
+                    <a href="@(item.PictureFolder + "/"+ @item.LinkUrl)" target="_blank">@item.LinkName</a>
+                }
+            </div>
+        </section>
+        <div class="bor visible-xs"></div>
+    </article>
+    <div class="hidden-print">
+        <hr class="hidden-xs">
+        <div class="row">
+            <div class="col-md-6">
+                <strong>
+                    Newer
+                </strong>
+                <div>
+                    @if (Model.PreNextBlog.PreBlog != null)
+                    {
+                        <a href="/Blog/Post/@(Model.PreNextBlog.PreBlog.Slug).html" title="@Model.PreNextBlog.PreBlog.Title">@Model.PreNextBlog.PreBlog.Title</a>
+                    }
+                    else
+                    {
+                        <a href="#" title="上一篇">没有上一篇了</a>
+                    }
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <strong>
+                    Older
+                </strong>
+                <div>
+                    @if (Model.PreNextBlog.NextBlog != null)
+                    {
+                        <a href="/Blog/Post/@(Model.PreNextBlog.NextBlog.Slug).html" title="@Model.PreNextBlog.NextBlog.Title">@Model.PreNextBlog.NextBlog.Title</a>
+                    }
+                    else
+                    {
+                        <a href="#" title="下一篇">没有下一篇了</a>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="bor"></div>
+        <div class="panel panel-primary comment-form-containter">
+            <div class="panel-heading">Comments <span class="badge pull-right">@Model.Blog.MovieComments.Count</span></div>
+            <div class="panel-body">
+                <div>
+                    <form action="/Blog/AddComment.html" data-ajax="true" data-ajax-complete="commentComplete" data-ajax-failure="commentBlowUp" data-ajax-loading="#loadingIndicator" data-ajax-mode="replace" data-ajax-success="commentSuccess" data-ajax-update="#ajaxTarget" id="form0" method="post" novalidate="novalidate">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.BlogComment.Name, new { @class = "form-control", placeholder = "Your Name" })
+                                    @Html.ValidationMessageFor(m => m.BlogComment.Name)
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(m => m.BlogComment.Email, new { @class = "form-control", placeholder = "Email" })
+                                    @Html.ValidationMessageFor(m => m.BlogComment.Email)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.TextAreaFor(m => m.BlogComment.Message, new { @class = "form-control", cols = "60", placeholder = "Say something", rows = "4" })
+                            @Html.ValidationMessageFor(m => m.BlogComment.Message)
+                        </div>
+                        <div class="form-group input-group">
+                            <span class="input-group-addon captcha-addon">
+                                <img alt="Captcha" id="Captcha" src="/Blog/Captcha.html">
+                            </span>
+                            @Html.TextBoxFor(m => m.BlogComment.CaptchaCode, new { @class = "form-control", placeholder = "Captcha Code" })
+                            @Html.ValidationMessageFor(m => m.BlogComment.CaptchaCode)
+                        </div>
+                        @Html.HiddenFor(m => m.BlogComment.MovieID)
+                        @Html.HiddenFor(m => m.BlogComment.IsPublic)
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa fa-fw fa-send"></i>
+                                Submit
+                            </button>
+                            <a class="btn btn-primary" data-ajax="true" data-ajax-loading="#loadingIndicator" data-ajax-mode="replace" data-ajax-update="#ajaxTarget" href="/Blog/GetApprovedCommentOfPost/@(Model.Blog.MovieID).html">See All Comments</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="loadercontainer">
+        </div>
+
+        <div id="loadingIndicator" class="mvcLoadingElement">
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                    <span class="sr-only">Processing...</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="thx-for-comment" class="alert alert-warning none">
+            Thanks, your comment is pending approval now. <br>
+            It will show up once blog administrator appoved your comment.
+        </div>
+
+        <div id="ajaxTarget">
+
+        </div>
+
+        <div class="bor"></div>
+    </div>
+</section>
+
+
+@Html.Partial("~/Views/Shared/_BlogSidebar.cshtml", Model.PopularTags)

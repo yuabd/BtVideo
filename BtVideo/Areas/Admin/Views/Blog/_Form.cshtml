@@ -1,0 +1,177 @@
+﻿@model BtVideo.Models.Admin.BlogViewModel
+
+<script type="text/javascript">
+    $(function () {
+        $("#Blog_DateCreated,#Blog_ShowDate").datepicker();
+        @foreach (var item in Model.Blog.MovieCategoryJoins ?? new List<BtVideo.Models.MovieCategoryJoin>())
+        {
+            @:$("#@item.CategoryID").prop("checked", "checked");;
+                }
+    });
+</script>
+
+<div class="section">
+    <div class="section-header">
+        <h3>标题</h3>
+    </div>
+    <div class="section-body">
+        <div class="row">
+            @Html.TextBoxFor(m => m.Blog.MovieTitle, new { @class = "title" }) <cite>*</cite>
+            @Html.ValidationMessageFor(m => m.Blog.MovieTitle)
+        </div>
+    </div>
+</div>
+<div class="section">
+    <div class="section-header">
+        <h3>内容</h3>
+    </div>
+    <div class="section-body">
+        @Html.TextAreaFor(m => m.Blog.MovieContent, new { @rows = 30 , style="width: 100%" })
+    </div>
+</div>
+<div class="section">
+    <div class="section-header">
+        <h3>分类</h3>
+    </div>
+    <div class="section-body">
+        <div class="row">
+            @foreach (var item in new BtVideo.Services.BlogService().GetBlogCategories())
+            {
+                <input type="checkbox" name="Categories" value="@item.CategoryID" id="@item.CategoryID" /> <label for="@item.CategoryID">@item.CategoryName</label>
+            }
+        </div>
+    </div>
+</div>
+<div class="section">
+    <div class="section-header">
+        <h3>地区</h3>
+    </div>
+    <div class="section-body">
+        <div class="row">
+            @Html.DropDownListFor(m => m.Blog.AreaID, new BtVideo.Services.BlogService().GetAreas().Select(m => new SelectListItem()
+       {
+           Text = m.AreaName,
+           Value = m.AreaID.ToString()
+       }).ToList())
+        </div>
+    </div>
+</div>
+<div class="section">
+    <div class="section-header">
+        <h3>Tags</h3>
+    </div>
+    <div class="section-body">
+        <div class="row">
+            @{var i = 0;
+                if (Model.BlogTags != null)
+                {
+                    foreach (var item in Model.BlogTags)
+                    {
+                        @Html.Hidden("BlogTags[" + i.ToString() + "].MovieID", @item.MovieID)
+                        @Html.TextBox("BlogTags[" + i.ToString() + "].Tag", @item.Tag, new { @class = "small" })<span>&nbsp;&nbsp;</span>
+                        i++;
+                    }
+                }
+                for (int j = i; j < 5; j++)
+                {
+                    @Html.Hidden("BlogTags[" + j.ToString() + "].MovieID", @Model.Blog.MovieID)
+                    @Html.TextBox("BlogTags[" + j.ToString() + "].Tag", "", new { @class = "small" })<span>&nbsp;&nbsp;</span>
+                }
+            }
+
+        </div>
+    </div>
+</div>
+<div class="section">
+    <div class="section-header">
+        <h3>日期</h3>
+    </div>
+    <div class="section-body">
+        <div class="row">
+            <label>由  <b>@Model.Blog.AuthorID</b>  编辑于</label>
+            @Html.TextBoxFor(m => m.Blog.DateCreated)
+        </div>
+    </div>
+</div>
+<div class="section">
+    <div class="section-header">
+        <h3>显示主页?</h3>
+    </div>
+    <div class="section-body">
+        <div class="row">
+            @Html.CheckBoxFor(m => m.Blog.IsPublic) Public
+        </div>
+    </div>
+</div>
+<div class="section">
+    <div class="section-header">
+        <h3>照片浏览</h3>
+    </div>
+    <div class="section-body">
+        <div class="row">
+            <input type="file" name="PictureFile" /> 当前照片: <a href="@Model.Blog.PictureFolder/@Model.Blog.PictureFile" target="_blank">@Model.Blog.PictureFile</a> <br />
+            大小 (W x H): 640 x 280 / 格式: JPG
+        </div>
+    </div>
+</div>
+<div class="section">
+    <div class="section-header">
+        <h3>影片信息</h3>
+    </div>
+    <div class="section-body">
+        <div class="row">
+            <label>导演:</label>
+            @Html.TextBoxFor(m => m.Blog.Director, new { @class = "large" })
+            @Html.ValidationMessageFor(m => m.Blog.Director)
+            <dfn>|分割</dfn>
+        </div>
+        <div class="row">
+            <label class="textarea">主演:</label>
+            @Html.TextAreaFor(m => m.Blog.Stars, new { @class = "large" })
+            @Html.ValidationMessageFor(m => m.Blog.Stars)
+            <dfn>|分割</dfn>
+        </div>
+        <div class="row">
+            <label>上映时间:</label>
+            @Html.TextBoxFor(m => m.Blog.ShowDate, new { @class = "large" })
+        </div>
+        <div class="row">
+            <label>豆瓣评分:</label>
+            @Html.TextBoxFor(m => m.Blog.Grade, new { @class = "large" })
+        </div>
+        <div class="row">
+            <label>磁力链接:</label>
+            @Html.TextBoxFor(m => m.Blog.Magnet, new { @class = "large" })
+        </div>
+    </div>
+</div>
+<div class="section">
+    <div class="section-header">
+        <h3>SEO</h3>
+    </div>
+    <div class="section-body">
+        <div class="row">
+            <label>Page Title:</label>
+            @Html.TextBoxFor(m => m.Blog.PageTitle, new { @class = "large" })
+            @Html.ValidationMessageFor(m => m.Blog.PageTitle)
+            <dfn>如为空,将使用本文章标题</dfn>
+        </div>
+        <div class="row">
+            <label class="textarea">Meta description:</label>
+            @Html.TextAreaFor(m => m.Blog.MetaDescription, new { @class = "large" })
+            @Html.ValidationMessageFor(m => m.Blog.MetaDescription)
+        </div>
+        <div class="row">
+            <label>Meta keywords:</label>
+            @Html.TextBoxFor(m => m.Blog.MetaKeywords, new { @class = "large" })
+            @Html.ValidationMessageFor(m => m.Blog.MetaKeywords)
+            <dfn>如为空,将使用本文章的tags </dfn>
+        </div>
+        @*<div class="row">
+                <label>Url:</label>
+                @Html.TextBoxFor(m => m.Blog.Slug, new { @class = "large" })
+                @Html.ValidationMessageFor(m => m.Blog.Slug)
+                <dfn>如为空,将使用本文章标题</dfn>
+            </div>*@
+    </div>
+</div>

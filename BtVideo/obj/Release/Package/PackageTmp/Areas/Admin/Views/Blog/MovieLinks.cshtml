@@ -1,0 +1,47 @@
+﻿@model IEnumerable<BtVideo.Models.MovieLink>
+
+@{
+    ViewBag.Title = "bt链接";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>下载资源</h2>
+
+<p>
+    @Html.ActionLink("返回", "Index", new { id = ViewBag.Id }, new { @class = "button-cancel" })
+    @Html.ActionLink("添加", "AddMovieLink", new { id = ViewBag.Id }, new { id = "add", @class = "button-add" })
+</p>
+
+<table class="grid">
+    <tr>
+        <th>
+            #
+        </th>
+        <th>名称</th>
+        <th>
+            下载量
+        </th>
+        <th>
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.LinkID
+            </td>
+            <td style="width:30%">
+                @item.LinkName
+            </td>
+            <td>
+                @item.DownloadCount
+            </td>
+            <td class="actions">
+                <a href="/Admin/Blog/EditMovieLink/@item.LinkID" class="button-edit">编辑</a>
+                <a href="/Admin/Blog/DeleteMovieLink/@item.LinkID" class="button-delete delete">删除</a>
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,242 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title | 114bt | 最新720P、1080P高清电影种子下载网站 | bt.114.center。</title>
+
+    @Styles.Render("~/bundles/bootstrap")
+
+    @RenderSection("head", false)
+
+</head>
+<body>
+    <header class="ediblog-header">
+        <h1 class="hidden">
+            <a href="/">yuabd</a>
+        </h1>
+        <div class="nav-container navbar-fixed-top">
+            <div class="container">
+                <nav class="navbar navbar-ediblog " role="navigation" id="slide-nav">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <div class="animbrand">
+                            <a class="navbar-brand animate hidden-xs" id="yuabd-logo" href="/">
+                                YUABD
+                            </a>
+                        </div>
+                        <a class="navbar-brand logo-mobile visible-xs" href="/">YUABD</a>
+                    </div>
+
+                    <div id="slidemenu">
+                        <form class="navbar-form navbar-right visible-xs" role="form" action="/list">
+                            <div class="form-group">
+                                <input id="search-mobile" class="form-control" type="text" value="" title="Search" placeholder="Search" name="keywords" maxlength="30">
+                            </div>
+                            <button class="btn btn-success" type="submit"><i class="fa fa-search"></i> Search</button>
+                        </form>
+                        <form action="/list" class="navbar-form navbar-right hidden-xs" method="get" role="search">
+                            <div class="form-group disp-flex">
+                                <input class="form-control" id="search" maxlength="30" name="keywords" placeholder="Search" title="Search" type="text" value="" />
+
+                                <button type="submit" class="btn-search">
+                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </form>
+                        <ul class="nav navbar-nav">
+                            @*<li class="dropdown">
+                                <a href="#" class="dropdown-toggle animate" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+                                    POSTS
+                                    <b class="caret"></b>
+                                </a>
+
+                                <ul class="dropdown-menu category-menu" id="archives">
+                                    <li><a href="/list">All Posts</a></li>
+                                    @foreach (var item in new BtVideo.Services.BlogService().GetBlogCategories().ToList())
+                                    {
+                                        <li>
+                                            <a href="/list/@(item.CategoryID)"
+                                               title="@item.CategoryName">
+                                                @item.CategoryName
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </li>*@
+                            <li>
+                                <a href="/list3" title="电影" class="animate">
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                    电影
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/list4" title="电视剧" class="animate">
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                    电视剧
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/list38" title="动漫" class="animate">
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                    动漫
+                                </a>
+                            </li>
+                            @*@foreach (var item in new BtVideo.Services.BlogService().GetBlogCategories().ToList())
+                            {
+                                <li>
+                                    <a href="/list@(item.CategoryID)" title="@item.CategoryName" class="animate">
+                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                        @item.CategoryName
+                                    </a>
+                                </li>
+                            }*@
+                            
+
+                            <li>
+                                <a href="/about" class="animate">
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                    About
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <div id="page-cover" class="visible-xs">
+    </div>
+    <div id="page-content" class="content">
+        <section class="mobile-aboutme hidden-lg">
+            <section class="blog-info-phone visible-xs">
+                <div class="card-bkimg-container">
+                    <img class="card-bkimg" alt="" src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg">
+                </div>
+                <div class="media">
+                    <a class="pull-left" href="/about">
+                        <img src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg" alt="Yuabd" class="media-object img-circle blogger-head-pic">
+                    </a>
+                    <div class="media-body">
+                        <p>
+                            .NET, Web Developer
+                        </p>
+                        <div class="btn-group btn-group-justified">
+                            <a href="mailto:yuabd1991@gmail.com" class="btn btn-success">
+                                <i class="fa fa-envelope"></i>
+                                Email
+                            </a>
+                            <a href="https://github.com/yuabd" target="_blank" class="btn btn-primary" title="GitHub">
+                                <i class="fa fa-github"></i>
+                                GitHub
+                            </a>
+                            <a href="http://weibo.com/235755671" target="_blank" class="btn btn-warning">
+                                <i class="fa fa-weibo"></i>
+                                Weibo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="container visible-md visible-sm animate">
+                <div class="media">
+                    <a class="pull-left" href="/about">
+                        <img src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg" alt="yuabd" class="media-object img-circle blogger-head-pic">
+                    </a>
+                    <div class="media-body">
+                        <p>
+                            .NET, Web Developer
+                        </p>
+                        <div class="btn-group">
+                            <a href="mailto:yuabd1991@gmail.com" class="btn btn-success">
+                                <i class="fa fa-envelope"></i>
+                                Email
+                            </a>
+                            <a href="https://github.com/yuabd" target="_blank" class="btn btn-primary" title="GitHub">
+                                <i class="fa fa-github"></i>
+                                GitHub
+                            </a>
+                            <a href="http://weibo.com/235755671" target="_blank" class="btn btn-warning">
+                                <i class="fa fa-weibo"></i>
+                                Weibo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section class="blog-info-desktop-lg visible-lg">
+                <div class="card-bkimg-container">
+                    <img class="card-bkimg" alt="" src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg">
+                </div>
+                <div class="blog-info-photo-text text-center">
+                    <a href="/about">
+                        <img src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg" alt="yuabd" class="media-object img-circle center-block blogger-head-pic">
+                    </a>
+                    <div class="bor"></div>
+                    <div>
+                        <h3 class="marginzero">
+                            Yuabd
+                        </h3>
+                        <div class="bor"></div>
+                        <p>
+                            .NET, Web Developer
+                        </p>
+                    </div>
+                </div>
+                <div class="bor"></div>
+                <div class="btn-group btn-group-justified">
+                    <a href="mailto:yuabd1991@gmail.com" class="btn btn-success">
+                        <i class="fa fa-envelope"></i>
+                        Email
+                    </a>
+                    <a href="https://github.com/yuabd" target="_blank" class="btn btn-primary">
+                        <i class="fa fa-github"></i>
+                        GitHub
+                    </a>
+                    <a href="http://weibo.com/235755671" target="_blank" class="btn btn-warning">
+                        <i class="fa fa-weibo"></i>
+                        Weibo
+                    </a>
+                </div>
+            </section>
+        </section>
+        <div class="container">
+            <div class="row">
+                @RenderBody()
+            </div>
+        </div>
+
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", false)
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?80fb7adcf09e179855b314a2f2c794de";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+</body>
+</html>

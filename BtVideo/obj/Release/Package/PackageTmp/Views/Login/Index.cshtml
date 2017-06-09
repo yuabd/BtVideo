@@ -1,0 +1,54 @@
+﻿@model BtVideo.Models.Site.LoginViewModel
+@{
+    ViewBag.Title = "管理员后台登录";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+<section class="slice ">
+    <div class="w-section inverse">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        <h2>欢迎来到</h2>
+                        <p style="font-size:16px;">
+                            请登录后继续.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+                    <div class="w-section inverse">
+                        <div class="w-box dark sign-in-wr">
+                            <span class="form-icon color-two">
+                                <i class="fa fa-users"></i>
+                            </span>
+                            <form role="form" action="/login/Login" method="post" class="form-light padding-15">
+                                <div class="form-group">
+                                    @Html.TextBox("UserID", "", new { @class = "form-control", placeholder = "输入用户名" })
+                                    @Html.ValidationMessageFor(m => m.UserID)
+                                </div>
+                                <div class="form-group">
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "输入密码" })
+                                    @Html.ValidationMessageFor(m => m.Password)
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="checkbox"><input name="RememberMe" type="checkbox"> 记住我</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button type="submit" class="btn btn-three pull-right">提交</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <p>@ViewBag.LoginError</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,61 @@
+﻿@model   BtVideo.Models.Site.BlogsViewModel
+@{
+    ViewBag.Title = ViewBag.PageTitle;
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    ViewBag.MetaKeywords = "bt,BT,BT吧,BTBA,bt种子,BT种子下载,bt天堂,BT天堂,BT电影,电影天堂,bt电影,电影bt,bt电影天堂,bt电影下载,BT迅雷下载,迅雷bt种子下载,迅雷bt下载,迅雷bt电影下载,迅雷下载";
+    ViewBag.MetaDescription = "BT吧每日更新2017年最新电影电视剧，720p|1080p|4K 等超高清分辨率电影电视剧迅雷下载、bt种子网盘离线下载等资源。";
+}
+
+<section class="col-lg-9 col-md-12">
+    <h3 class="h3-cat-list">
+        @*<a class="pull-right hidden-xs" href="" target="_blank" title="Subscribe Top 20 Posts">
+            <i class="fa fa-rss"></i>
+        </a>*@
+        <span>
+            All Posts
+        </span>
+        <span class="badge hidden-xs">@ViewBag.Count</span>
+        <span class="badge visible-xs pull-right">@ViewBag.Count</span>
+    </h3>
+    <hr />
+    @foreach (var item in Model.Blogs)
+    {
+        <article class="article-post-summary">
+            <div class="post-date-box hidden-xs">
+                <h1 class="post-date-day">@item.DateCreated.Day</h1>
+                <div class="post-date-month">
+                    @item.DateCreated.Month
+                </div>
+            </div>
+            <div class="post-summary-box">
+                <time datetime="@item.DateCreated" class="none">@item.DateCreated</time>
+
+                <h4 class="post-summary-title">
+                    <a href="/@item.Slug" title="@item.MovieTitle">@item.MovieTitle</a>
+                </h4>
+
+                <p class="post-summary-text">
+                    @item.Tags
+                </p>
+
+                <div class="post-summary-tags">
+                    @foreach (var tag in item.MovieTags)
+                    {
+                        <a href="/tags/@(tag.Tag)" title="@tag.Tag" class="post-summary-tag">@tag.Tag</a>
+                    }
+                </div>
+            </div>
+        </article>
+        <div class="bor hidden-xs"></div>
+        <hr class="hidden-xs">
+    }
+
+    <div class="pull-right">
+        <div>
+            @Model.Blogs.Pager("pager")
+        </div>
+    </div>
+</section>
+
+<!-- 侧边栏 -->
+@Html.Partial("~/Views/Shared/_BlogSidebar.cshtml", Model.PopularTags)

@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="SiteDataContext-Web.config Connection String" description="SiteDataContext 由应用程序在 web.config 中用来访问数据库的连接字符串。" defaultValue="Data Source=139.129.94.246,53640;initial catalog=movies;user id=sa;password=GU123shi;MultipleActiveResultSets=True;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="G:\\github\\Bt\\BtVideo\\BtVideo\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='SiteDataContext']/@connectionString" />
+  </parameter>
+</parameters>
