@@ -7,11 +7,10 @@ using System.Web;
 
 namespace BtVideo.Services
 {
-    public class SiteService: DbAccess
+    public class SiteService : DbAccess
     {
         public BaseObject InsertLink(Links links)
         {
-
             BaseObject obj = new BaseObject();
             try
             {
@@ -102,6 +101,36 @@ namespace BtVideo.Services
                         select l).ToList();
 
             return list;
+        }
+
+        public BaseObject SaveKeyword(string keyword)
+        {
+            BaseObject obj = new BaseObject(1);
+            var k = db.HotKeywords.FirstOrDefault(m => m.Keyword == keyword);
+
+            if (k != null)
+            {
+                k.Count += 1;
+                k.UpdateDate = DateTime.Now;
+            }
+            else
+            {
+                db.HotKeywords.Add(new HotKeyword()
+                {
+                    Count = 0,
+                    Keyword = keyword,
+                    UpdateDate = DateTime.Now
+                });
+            }
+
+            db.SaveChanges();
+
+            return obj;
+        }
+
+        public IQueryable<HotKeyword> GetKeywords()
+        {
+            return db.HotKeywords;
         }
 
         public void Save()

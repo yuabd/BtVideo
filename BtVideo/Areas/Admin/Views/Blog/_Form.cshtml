@@ -6,7 +6,7 @@
         @foreach (var item in Model.Blog.MovieCategoryJoins ?? new List<BtVideo.Models.MovieCategoryJoin>())
         {
             @:$("#@item.CategoryID").prop("checked", "checked");;
-                }
+                        }
     });
 </script>
 
@@ -143,6 +143,15 @@
             <label>磁力链接:</label>
             @Html.TextBoxFor(m => m.Blog.Magnet, new { @class = "large" })
         </div>
+        <div class="row">
+            <label>imdb:</label>
+            @Html.TextBoxFor(m => m.Blog.ImdbTitle, new { @class = "large" })
+        </div>
+        <div class="row">
+            <label>imdb链接:</label>
+            @Html.TextBoxFor(m => m.Blog.ImdbLink, new { @class = "large" })
+        </div>
+        @Html.HiddenFor(m => m.Blog.DateUpdate)
     </div>
 </div>
 <div class="section">

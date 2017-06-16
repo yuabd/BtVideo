@@ -7,6 +7,8 @@ using BtVideo.Models;
 using BtVideo.Models.Others;
 using BtVideo.Helpers;
 using BtVideo.Models.Site;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace BtVideo.Services
 {
@@ -58,6 +60,10 @@ namespace BtVideo.Services
             b.Stars = blog.Stars;
             b.Grade = blog.Grade;
             b.Magnet = blog.Magnet;
+            b.ImdbLink = blog.ImdbLink;
+            b.ImdbTitle = blog.ImdbTitle;
+            b.AuthorID = blog.AuthorID;
+            b.DateUpdate = blog.DateUpdate;
 
 			// file
 			if (file.ContentLength > 0)
@@ -156,7 +162,6 @@ namespace BtVideo.Services
 		}
 
 		// Blog Comment
-
 		public void InsertBlogComment(MovieComment blogComment)
 		{
 			blogComment.IsPublic = false;
@@ -164,33 +169,62 @@ namespace BtVideo.Services
 			db.MovieComments.Add(blogComment);
 			db.SaveChanges();
 
-			//try
-			//{
-			//	var subject = "有新的评论需要您审核-厦门巨易网络科技有限公司";
+            try
+            {
+                var movie = db.Movies.FirstOrDefault(m => m.MovieID == blogComment.MovieID);
 
-			//	var message = string.Format("<p>Hi {0},</p>" +
-			//		"<p>评论信息:</p>" +
-			//		"{1}" +
-			//		"<p>文章: <a href='http://www.henhaoji.com.cn/Blog/Post/{2}'>{3}</a></p>" +
-			//		"<p><a href='http://www.henhaoji.com.cn/admin/blog/PendingComments'>点击审核</a></p>",
-			//		blogComment.Name,
-			//		blogComment.Message,
-			//		blogComment.Blog.Slug,
-			//		blogComment.Blog.BlogTitle
-			//		);
-            
-			//	Studio.Models.Others.MailBag mailBag = new Studio.Models.Others.MailBag();
+                var subject = "有新的评论需要审核-bt.henhaoji.com.cn";
 
-			//	mailBag.ToMailAddress = "jerry@henhaoji.com.cn";
-			//	mailBag.CcMailAddress = "yuabd1991@gmail.com";
-			//	mailBag.Subject = subject;
-			//	mailBag.Message = message;
-			//	mailBag.Send(true);
-			//}
-			//catch (Exception e)
-			//{
-			//}
-		}
+                var message = string.Format("<p>Hi {0},</p>" +
+                    "<p>评论信息:</p>" +
+                    "{1}" +
+                    "<p>文章: <a href='http://bt.henhaoji.com.cn/{2}'>{3}</a></p>" +
+                    "<p><a href='http://bt.henhaoji.com.cn/admin/blog/PendingComments'>点击审核</a></p>",
+                    blogComment.Name,
+                    blogComment.Message,
+                    movie.Slug,
+                    movie.MovieTitle
+                    );
+
+                //BtVideo.Models.Others.MailBag mailBag = new BtVideo.Models.Others.MailBag();
+
+                //mailBag.ToMailAddress = "287313827@qq.com";
+                ////mailBag.CcMailAddress = "";
+                //mailBag.Subject = subject;
+                //mailBag.Message = message;
+                //mailBag.Send(true);
+
+                IDictionary<string, string> parameters = new Dictionary<string, string>();
+                parameters.Add("apiUser", "henhaoji");
+                parameters.Add("apiKey", "Nca7r8U1ho2eYXpX");
+                parameters.Add("from", "noreply@henhaoji.com.cn");
+                parameters.Add("fromName", "很好记bt");
+                parameters.Add("to", "287313827@qq.com");
+                parameters.Add("subject", subject);
+                parameters.Add("html", message);
+                using (var client = new System.Net.Http.HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://api.sendcloud.net");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    // HTTP GET
+                    HttpResponseMessage response = new System.Net.Http.HttpResponseMessage();
+
+                    response = client.PostAsync("/apiv2/mail/send", new FormUrlEncodedContent(parameters)).Result;
+
+                    var product = "";
+                    if (response.IsSuccessStatusCode)
+                    {
+                        product = response.Content.ReadAsStringAsync().Result;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                LogHelper.WriteLog("添加评论发邮件错误", e.Message);
+            }
+        }
 
 		public void UpdateBlogComment(MovieComment blogComment)
 		{
@@ -219,37 +253,63 @@ namespace BtVideo.Services
 		public void ApproveBlogComment(int commentID)
 		{
 			var c = db.MovieComments.FirstOrDefault(m => m.CommentID == commentID);
-			c.IsPublic = true;
-			//c.BlogID
-			db.SaveChanges();
+            try
+            {
+                c.IsPublic = true;
 
-			// notify posting user
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                LogHelper.WriteLog("pinglun:", e.StackTrace + e.Message + e.Source);
+            }
 
-			//try
-			//{
-			//	var subject = "您的评论已经审核通过-厦门巨易网络科技有限公司";
+            // notify posting user
 
-			//	var message = string.Format("<p>Hi {0},</p>" +
-			//		"<p>您的评论已经被审核通过:</p>" +
-			//		"{1}" +
-			//		"<p>文章: <a href='http://www.henhaoji.com.cn/Blog/Post/{2}.html'>{3}</a></p>",
-			//		c.Name,
-			//		c.Message,
-			//		c.Blog.Slug,
-			//		c.Blog.BlogTitle
-			//		);
+            try
+            {
+                var subject = "您的评论已经审核通过-bt.henhaoji.com.cn";
 
-			//	Studio.Models.Others.MailBag mailBag = new Studio.Models.Others.MailBag();
+                var message = string.Format("<p>Hi {0},</p>" +
+                    "<p>您的评论已经被审核通过:</p>" +
+                    "{1}" +
+                    "<p>文章: <a href='http://bt.henhaoji.com.cn/{2}'>{3}</a></p>",
+                    c.Name,
+                    c.Message,
+                    c.Movie.Slug,
+                    c.Movie.MovieTitle
+                    );
+                
+                IDictionary<string, string> parameters = new Dictionary<string, string>();
+                parameters.Add("apiUser", "henhaoji");
+                parameters.Add("apiKey", "Nca7r8U1ho2eYXpX");
+                parameters.Add("from", "noreply@henhaoji.com.cn");
+                parameters.Add("fromName", "很好记bt");
+                parameters.Add("to", c.Email);
+                parameters.Add("subject", subject);
+                parameters.Add("html", message);
+                using (var client = new System.Net.Http.HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://api.sendcloud.net");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-			//	mailBag.ToMailAddress = c.Email;
-			//	mailBag.Subject = subject;
-			//	mailBag.Message = message;
-			//	mailBag.Send(true);
-			//}
-			//catch (Exception e)
-			//{
-			//}
-		}
+                    // HTTP GET
+                    HttpResponseMessage response = new System.Net.Http.HttpResponseMessage();
+
+                    response = client.PostAsync("/apiv2/mail/send", new FormUrlEncodedContent(parameters)).Result;
+
+                    var product = "";
+                    if (response.IsSuccessStatusCode)
+                    {
+                        product = response.Content.ReadAsStringAsync().Result;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+            }
+        }
 
 		public IQueryable<MovieComment> GetComments()
 		{
@@ -270,7 +330,6 @@ namespace BtVideo.Services
 		}
 
 		// Blog Category
-
 		public void InsertBlogCategory(MovieCategory blogCategory)
 		{
 			if (string.IsNullOrEmpty(blogCategory.PageTitle))
@@ -375,16 +434,16 @@ namespace BtVideo.Services
 			{
 				DeleteBlogTag(tag);
 			}
-            var b = db.Movies.Find(blog.MovieID);
+            var b = db.Movies.FirstOrDefault(m => m.MovieID == blog.MovieID);
 
             foreach (MovieTag tag in blogTags)
 			{
 				tag.MovieID = blog.MovieID;
-                b.Tags = string.Empty;
+                
                 if (!string.IsNullOrEmpty(tag.Tag))
 				{
 					tag.Tag = BtVideo.Helpers.Utilities.GenerateSlug(tag.Tag, 20);
-                    b.Tags += tag.Tag + ",";
+                    
 					InsertBlogTag(tag);
 				}
 			}
@@ -533,11 +592,11 @@ namespace BtVideo.Services
                     {
                         StarName = s
                     };
+
+                    db.MovieStars.Add(star);
+
+                    db.SaveChanges();
                 }
-
-                db.MovieStars.Add(star);
-
-                db.SaveChanges();
 
                 starJoin = new MovieStarJoin()
                 {
@@ -575,10 +634,10 @@ namespace BtVideo.Services
         public void UpdateMovieLink(MovieLink link)
         {
             var link_db = db.MovieLinks.Where(m => m.LinkID == link.LinkID).FirstOrDefault();
-
-            link_db.DownloadCount = link.DownloadCount;
+            
             link_db.LinkName = link.LinkName;
             link_db.LinkUrl = link.LinkUrl;
+            link_db.Magnet = link.Magnet;
 
             db.SaveChanges();
         }

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BtVideo", "BtVideo\BtVideo.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BtVideo.Tests", "BtVideo.Tests\BtVideo.Tests.csproj", "{9992181C-BD75-4939-8BF7-08C08F206949}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BtService", "BtService\BtService.csproj", "{156CF91D-80B6-44F1-A797-1006F58AF8ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{9992181C-BD75-4939-8BF7-08C08F206949}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9992181C-BD75-4939-8BF7-08C08F206949}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9992181C-BD75-4939-8BF7-08C08F206949}.Release|Any CPU.Build.0 = Release|Any CPU
+		{156CF91D-80B6-44F1-A797-1006F58AF8ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{156CF91D-80B6-44F1-A797-1006F58AF8ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{156CF91D-80B6-44F1-A797-1006F58AF8ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{156CF91D-80B6-44F1-A797-1006F58AF8ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

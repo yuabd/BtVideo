@@ -12,7 +12,7 @@ namespace BtVideo.Models
 		[Key, Column(Order = 1)]
 		public int MovieID { get; set; }
 		[Key, Column(Order = 2)]
-		[MaxLength(20)]
+		[MaxLength(50)]
 		public string Tag { get; set; }
 
         public virtual Movie Blog { get; set; }

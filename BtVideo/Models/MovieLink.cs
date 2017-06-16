@@ -20,6 +20,12 @@ namespace BtVideo.Models
         public string LinkUrl { get; set; }
 
         /// <summary>
+        /// 磁力链接
+        /// </summary>
+        [MaxLength(500)]
+        public string Magnet { get; set; }
+
+        /// <summary>
         /// 下载次数
         /// </summary>
         public int DownloadCount { get; set; }

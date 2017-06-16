@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BtVideo.Models.Blog>
+﻿@model IEnumerable<BtVideo.Models.Movie>
 
 @{
     ViewBag.Title = "等待审核的评论";
@@ -29,7 +29,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @item.BlogID
+            @item.MovieID
         </td>
 		<td>
             @item.AuthorID
@@ -38,13 +38,13 @@
             @String.Format("{0:d}", item.DateCreated)
         </td>
 		<td>
-            @item.BlogTitle
+            @item.MovieTitle
         </td>
 		 <td>
             @item.PageVisits
         </td>
     </tr>
-	foreach (var comment in item.BlogComments.Where(m => m.IsPublic == false))
+	foreach (var comment in item.MovieComments.Where(m => m.IsPublic == false))
 	{
 	<tr>
 		<td></td>

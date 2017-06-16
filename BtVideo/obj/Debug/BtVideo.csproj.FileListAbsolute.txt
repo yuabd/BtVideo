@@ -72,6 +72,17 @@ G:\github\Bt\BtVideo\BtVideo\obj\Debug\BtVideo.Migrations.InitialCreate.resource
 G:\github\Bt\BtVideo\BtVideo\obj\Debug\BtVideo.Migrations.InitialCreate1.resources
 G:\github\Bt\BtVideo\BtVideo\obj\Debug\BtVideo.Migrations.InitialCreate2.resources
 G:\github\Bt\BtVideo\BtVideo\obj\Debug\BtVideo.Migrations.InitialCreate3.resources
+G:\github\Bt\BtVideo\BtVideo\obj\Debug\BtVideo.Migrations.InitialCreate4.resources
+G:\github\Bt\BtVideo\BtVideo\obj\Debug\BtVideo.Migrations.InitialCreate5.resources
+G:\github\Bt\BtVideo\BtVideo\obj\Debug\BtVideo.Migrations.InitialCreate6.resources
+G:\github\Bt\BtVideo\BtVideo\obj\Debug\BtVideo.Migrations.InitialCreate7.resources
+G:\github\Bt\BtVideo\BtVideo\obj\Debug\BtVideo.Migrations.InitialCreate8.resources
+G:\github\Bt\BtVideo\BtVideo\obj\Debug\BtVideo.Migrations.InitialCreate9.resources
+G:\github\Bt\BtVideo\BtVideo\obj\Debug\BtVideo.Migrations.InitialCreate10.resources
+G:\github\Bt\BtVideo\BtVideo\obj\Debug\BtVideo.Migrations.InitialCreate11.resources
+G:\github\Bt\BtVideo\BtVideo\obj\Debug\BtVideo.Migrations.InitialCreate12.resources
+G:\github\Bt\BtVideo\BtVideo\obj\Debug\BtVideo.Migrations.InitialCreate13.resources
+G:\github\Bt\BtVideo\BtVideo\obj\Debug\BtVideo.Migrations.InitialCreate14.resources
 G:\github\Bt\BtVideo\BtVideo\obj\Debug\BtVideo.csproj.GenerateResource.Cache
 G:\github\Bt\BtVideo\BtVideo\obj\Debug\BtVideo.dll
 G:\github\Bt\BtVideo\BtVideo\obj\Debug\BtVideo.pdb

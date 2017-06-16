@@ -26,13 +26,12 @@ namespace BtVideo.Models
 		public string Message { get; set; }
 		public bool IsPublic { get; set; }
 		public DateTime DateCreated { get; set; }
-        
-		[NotMapped, Required]
-		public string CaptchaCode { get; set; }
+        //[NotMapped, MaxLength(6)]
+		//public string CaptchaCode { get; set; }
         [NotMapped]
 		public string GravatarHash { get { return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(Email.Trim().ToLower(), "MD5").ToLower(); } }
 
-        public virtual Movie Movies { get; set; }
+        public virtual Movie Movie { get; set; }
 
     }
 }

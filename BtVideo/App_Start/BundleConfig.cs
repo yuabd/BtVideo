@@ -29,9 +29,8 @@ namespace BtVideo.App_Start
                 "~/App_Themes/home/scripts/jquery-{version}.js",
                 "~/App_Themes/home/scripts/bootstrap.min.js",
                 "~/App_Themes/home/scripts/bootstrap.ediblog.slidemenu.min.js",
-                "~/Scripts/jquery.validate.min.js",
-                "~/Scripts/jquery.validate.unobtrusive.min.js",
-                "~/App_Themes/home/scripts/jquery.unobtrusive-ajax.min.js"
+                "~/App_Themes/home/scripts/jquery.lazyload.min.js",
+                "~/App_Themes/home/scripts/btvideo.app.js"
                 );
             bundle.Orderer = new AsDefinedBundleOrderer();
 
@@ -43,8 +42,9 @@ namespace BtVideo.App_Start
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/post").Include(
-                //"~/Scripts/SintaxHighlighter/sh.min.js",
-                "~/App_Themes/home/scripts/jquery.lazyload.min.js"
+                "~/Scripts/jquery.validate.min.js",
+                "~/Scripts/jquery.validate.unobtrusive.min.js",
+                "~/App_Themes/home/scripts/jquery.unobtrusive-ajax.min.js"
                 //"~/Plugins/wordCount/readingTime.js"
                 ));
         }

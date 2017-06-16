@@ -2,8 +2,8 @@
 @{
     ViewBag.Title = ViewBag.PageTitle;
     Layout = "~/Views/Shared/_HomeLayout.cshtml";
-    ViewBag.MetaKeywords = "114bt电影,BT,BT吧,BTBA,bt种子,BT种子下载,bt天堂,BT天堂,BT电影,电影天堂,bt电影,电影bt,bt电影天堂,bt电影下载,BT迅雷下载,迅雷bt种子下载,迅雷bt下载,迅雷bt电影下载,迅雷下载";
-    ViewBag.MetaDescription = "114bt电影每日更新2017年最新电影电视剧，720p|1080p|4K 等超高清分辨率电影电视剧迅雷下载、bt种子网盘离线下载等资源。";
+    ViewBag.MetaKeywords = "很好记bt电影,很好记bt电影天堂,迅雷电影,迅雷种子,bt高清电影,bt电影下载,BT种子,最新电影排行榜";
+    ViewBag.MetaDescription = "很好记bt电影(bt.henhaoji.com.cn)每日更新2017年最新电影电视剧，720p|1080p|4K 等超高清分辨率电影电视剧迅雷下载、bt种子网盘离线下载等资源。";
 }
 
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -11,11 +11,29 @@
     <ol class="carousel-indicators">
         <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
         <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="3"></li>
     </ol>
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
         <div class="item active">
+            <a href="/22">
+                <img src="~/Content/Images/超凡战队.jpg" class="img-responsive" alt="超凡战队">
+                <div class="carousel-caption">
+                    超凡战队下载
+                </div>
+            </a>
+        </div>
+        <div class="item">
+            <a href="/21">
+                <img src="~/Content/Images/006HJ39wgy1fghxod7318j30xc0akgqm.jpg" class="img-responsive" alt="春娇救志明下载">
+                <div class="carousel-caption">
+                    春娇救志明下载
+                </div>
+            </a>
+        </div>
+        <div class="item">
             <a href="/8">
                 <img src="~/Content/Images/1e33cee08f34e707.jpg" class="img-responsive" alt="速度与激情8">
                 <div class="carousel-caption">
@@ -23,7 +41,7 @@
                 </div>
             </a>
         </div>
-                <div class="item">
+        <div class="item">
             <a href="/7">
                 <img src="~/Content/Images/8f6761a0d4edebad.jpg" class="img-responsive" alt="摔跤吧，爸爸！">
                 <div class="carousel-caption">
@@ -34,11 +52,11 @@
     </div>
 
     <!-- Controls -->
-    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+    <a class="left carousel-control" title="上一页" href="#carousel-example-generic" role="button" data-slide="prev">
         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
     </a>
-    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+    <a class="right carousel-control" title="下一页" href="#carousel-example-generic" role="button" data-slide="next">
         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
     </a>
@@ -47,7 +65,7 @@
 <section class="col-lg-9 col-md-12">
     <h3 class="h3-cat-list">
         <span>
-            All Posts
+            数据量：
         </span>
         <span class="badge hidden-xs">@ViewBag.Count</span>
         <span class="badge visible-xs pull-right">@ViewBag.Count</span>
@@ -57,7 +75,7 @@
     {
         <article class="article-post-summary">
             <div class="post-date-box hidden-xs">
-                <h1 class="post-date-day">@item.Grade</h1>
+                <h1 class="post-date-day">@item.Grade.ToString("0.0")</h1>
                 <div class="post-date-month">
                     @item.PageVisits
                 </div>
@@ -68,7 +86,7 @@
                 <div class="col-md-12">
                     <div class="col-md-3">
                         <a href="/@item.Slug" title="@item.MovieTitle">
-                            <img src="@item.PictureFolder/@item.PictureThumbnail" class="img-responsive" style="width: 100%;" />
+                            <img src="@item.PictureThumbnail" class="img-responsive" style="width: 100%;" />
                         </a>
                     </div>
                     <div class="col-md-9 post-summary-text">
@@ -84,7 +102,8 @@
                         <div class="post-summary-tags">
                             @foreach (var tag in item.MovieTags)
                             {
-                                <a href="/tags/@(tag.Tag)" title="@tag.Tag" class="post-summary-tag">@tag.Tag</a>
+                                <a href="/tags/@(tag.Tag)" title="@tag.Tag"
+                                   class="post-summary-tag">@tag.Tag</a>
                             }
                         </div>
                     </div>
@@ -103,4 +122,4 @@
 </section>
 
 <!-- 侧边栏 -->
-@Html.Partial("~/Views/Shared/_BlogSidebar.cshtml", Model.PopularTags)
+@Html.Partial("~/Views/Shared/_BlogSidebar.cshtml")

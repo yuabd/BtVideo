@@ -30,7 +30,7 @@
 			$(".button-add-icon").button({ icons: { primary: 'ui-icon-plus' }, text: false });
 			$(".button-save-icon").button({ icons: { primary: 'ui-icon-check'}, text: false });
 
-			$(".delete").click(function (event) {
+			$(".delete, .button-delete").click(function (event) {
 				if (!confirm("此操作不可恢复,您确定要删除该记录吗?")) {
 					event.preventDefault();
 				}

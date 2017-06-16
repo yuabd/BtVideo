@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Data.Entity.Infrastructure;
+using BtVideo.Models.Spider;
 
 namespace BtVideo.Models
 {
@@ -65,6 +66,11 @@ namespace BtVideo.Models
         public DbSet<MovieStarJoin> MovieStarJoins { get; set; }
 
         public DbSet<MovieArea> MovieAreas { get; set; }
+
+        //public DbSet<WebLink> WebLinks { get; set; }
+        public DbSet<SpiderTask> SpiderTasks { get; set; }
+
+        public DbSet<HotKeyword> HotKeywords { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

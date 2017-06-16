@@ -1,0 +1,26 @@
+﻿@model List<BtVideo.Models.MovieComment>
+<div class="comment-list row">
+
+    @foreach (var item in Model)
+    {
+        <div class="col-md-1 col-sm-1 col-xs-1">
+            <div class="user-avatar-char">
+                @item.Name.Substring(0,1)
+            </div>
+        </div>
+        <div class="col-md-11 col-sm-11 col-xs-11">
+            <div class="panel panel-default comment-item">
+                <div class="panel-heading">
+                    <strong>@item.Name</strong>
+
+                    <span class="text-muted pull-right"> @item.DateCreated</span>
+                </div>
+                <div class="panel-body">
+                    @item.Message
+                    <div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

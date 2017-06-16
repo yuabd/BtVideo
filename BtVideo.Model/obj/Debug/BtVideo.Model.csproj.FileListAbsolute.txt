@@ -1,0 +1,4 @@
+G:\github\Bt\BtVideo\BtVideo.Model\bin\Debug\BtVideo.Model.dll
+G:\github\Bt\BtVideo\BtVideo.Model\bin\Debug\BtVideo.Model.pdb
+G:\github\Bt\BtVideo\BtVideo.Model\obj\Debug\BtVideo.Model.dll
+G:\github\Bt\BtVideo\BtVideo.Model\obj\Debug\BtVideo.Model.pdb

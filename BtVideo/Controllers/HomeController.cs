@@ -1,4 +1,5 @@
-﻿using BtVideo.Models;
+﻿using BtVideo.Helpers;
+using BtVideo.Models;
 using BtVideo.Models.Others;
 using BtVideo.Models.Site;
 using BtVideo.Services;
@@ -10,6 +11,7 @@ using System.Web.Mvc;
 
 namespace BtVideo.Controllers
 {
+    [GlobalFilter]
     public class HomeController : Controller
     {
         private BlogService bs = new BlogService();
@@ -32,7 +34,7 @@ namespace BtVideo.Controllers
             //var archives = bs.GetArchives().ToList();
 
             var model = new BlogsViewModel(pBlogs, null, popularTags, null);
-            ViewBag.PageTitle = "114bt电影";
+            ViewBag.PageTitle = "很好记bt";
             ViewBag.Blog = "current";
 
             return View("~/Views/Movie/Index.cshtml", model);

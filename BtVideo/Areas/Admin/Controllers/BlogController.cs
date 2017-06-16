@@ -35,7 +35,7 @@ namespace BtVideo.Areas.Admin.Controllers
             blog.DateCreated = DateTime.Now;
             blog.IsPublic = true;
             blog.ShowDate = DateTime.Now;
-            blog.AreaID = 1;
+            blog.DateUpdate = DateTime.Now;
 
             IEnumerable<MovieTag> blogTags = null;
 
@@ -70,7 +70,8 @@ namespace BtVideo.Areas.Admin.Controllers
 
                 blogService.SaveCategory(blog.MovieID, categories);
 
-                blogService.SaveStar(blog.Stars.Split('|'), blog.Director.Split('|'), blog.MovieID);
+                blogService.SaveStar((string.IsNullOrWhiteSpace(blog.Stars) ? new string[] { } : blog.Stars.Split('|')),
+                    string.IsNullOrWhiteSpace(blog.Director) ? new string[] { } : blog.Director.Split('|'), blog.MovieID);
 
                 blogService.SaveBlogTags(blog, blogTags);
 
@@ -116,7 +117,8 @@ namespace BtVideo.Areas.Admin.Controllers
 
                 blogService.SaveCategory(blog.MovieID, categories);
 
-                blogService.SaveStar(blog.Stars.Split('|'), blog.Director.Split('|'), blog.MovieID);
+                blogService.SaveStar((string.IsNullOrWhiteSpace(blog.Stars) ? new string[] { } : blog.Stars.Split('|')),
+                    string.IsNullOrWhiteSpace(blog.Director) ? new string[] { } : blog.Director.Split('|'), blog.MovieID);
 
                 blogService.SaveBlogTags(blog, blogTags);
 
@@ -226,7 +228,7 @@ namespace BtVideo.Areas.Admin.Controllers
                     var fileName = Guid.NewGuid().ToString();
                     var file = BtVideo.Helpers.Utilities.UploadImageFile(filedata.InputStream, "/Content/Pictures/Blog", fileName, 800, 400, BtVideo.Helpers.ImageSaveType.Original);
 
-                    model.msg = "/Content/Pictures/Blog" + file;
+                    model.msg = "/Content/Pictures/Blog/" + file;
                 }
 
                 JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
@@ -275,7 +277,7 @@ namespace BtVideo.Areas.Admin.Controllers
                 // file
                 if (file.ContentLength > 0)
                 {
-                    var fileName = string.Format("{0}-{1}.torrent", model.LinkID, model.LinkName);
+                    var fileName = string.Format("{0}-{1}.torrent", model.LinkID, Guid.NewGuid().ToString());
                     var filePath = HttpContext.Server.MapPath(model.PictureFolder + "/" + fileName);
 
                     string directory = Path.GetDirectoryName(filePath);

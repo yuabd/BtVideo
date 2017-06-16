@@ -42,55 +42,68 @@
                 </span>
                 <span class="badge pull-right">@Model.Blog.PageVisits Reads</span>
             </div>
-            <div class="hidden-print">
+            <div class="hidden-print" style="overflow: hidden;">
                 <section class="post-cat-tag-info">
                     <div class="button pull-right hidden-xs">
                         <span class="toptags-list toptags-list-sm">
                             @foreach (var item in Model.Blog.MovieTags)
                             {
-                                <a href="/tags/@(item.Tag)" rel="0">@item.Tag</a>
+                                <a href="/tags/@(item.Tag)" title="@item.Tag" rel="0">@item.Tag</a>
                             }
                         </span>
                     </div>
-                    <ul class="list-inline">
-                        @foreach (var item in Model.Blog.MovieTags)
-                        {
-                            <li>@item.Tag</li>
-                        }
-                    </ul>
                 </section>
             </div>
             <hr class="post-header-hr mt0">
         </header>
         <section class="post-content clearfix">
             <div class="col-sm-4">
-                <img src="@(Model.Blog.PictureFolder + "/" + @Model.Blog.PictureThumbnail)" style="width: 100%;" />
+                <img src="@Model.Blog.PictureThumbnail"
+                     style="width: 100%;" alt="@Model.Blog.MovieTitle" />
             </div>
             <div class="col-sm-8">
                 <h1>@Model.Blog.MovieTitle</h1>
-                <div class="col-sm-2">更新:</div>
-                <div class="col-sm-10">@Model.Blog.DateCreated.ToString("yyyy-MM-dd HH:mm:ss")</div>
-                <br />
-                <br />
-                @*<div class="col-sm-2">标签:</div>
-                <div class="col-sm-10">@Model.Blog.Tags</div>
-                <br />
-                <br />*@
-                <div class="col-sm-2">地区:</div>
-                <div class="col-sm-10">@Model.Blog.MovieArea.AreaName</div>
-                <br />
-                <br />
-                <div class="col-sm-2">导演:</div>
-                <div class="col-sm-10">@Model.Blog.Director</div>
-                <br />
-                <br />
-                <div class="col-sm-2">主演:</div>
-                <div class="col-sm-10">@Model.Blog.Stars</div>
-                <br />
-                <br />
-                <div class="col-sm-2">上映日期:</div>
-                <div class="col-sm-10">@Model.Blog.ShowDate.ToString("yyyy-MM-dd")</div>
-                <br />
+                <div class="row">
+                    <div class="col-sm-2">更新:</div>
+                    <div class="col-sm-10">@Model.Blog.DateCreated.ToString("yyyy-MM-dd HH:mm:ss")</div>
+                </div>
+                @if (!string.IsNullOrWhiteSpace(Model.Blog.ImdbLink))
+                {
+                    <div class="row">
+                        <div class="col-sm-2">IMDb:</div>
+                        <div class="col-sm-9">
+                            <a href="@Model.Blog.ImdbLink" target="_blank" rel="nofollow"
+                               title="@Model.Blog.ImdbTitle">@Model.Blog.ImdbTitle</a>
+                        </div>
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-sm-2">地区:</div>
+                    <div class="col-sm-10">@Model.Blog.MovieArea.AreaName</div>
+                </div>
+                @if (!string.IsNullOrWhiteSpace(Model.Blog.Director))
+                {
+                    <div class="row">
+                        <div class="col-sm-2">导演:</div>
+                        <div class="col-sm-10">@Model.Blog.Director</div>
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-sm-2">主演:</div>
+                    <div class="col-sm-10">
+                        @foreach (var item in Model.Blog.Stars.Split('|'))
+                        {
+                            <a href="/star/@item" title="@item">
+                                @item
+                            </a>
+                            @:&nbsp;&nbsp;
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">上映:</div>
+                    <div class="col-sm-9">@Model.Blog.ShowDate.ToString("yyyy-MM-dd")</div>
+                </div>
             </div>
             <div class="col-sm-12">
                 <h2>剧情介绍：</h2>
@@ -109,7 +122,10 @@
                 <h2>种子：</h2>
                 @foreach (var item in Model.Blog.MovieLinks)
                 {
-                    <a href="@(item.PictureFolder + "/"+ @item.LinkUrl)" target="_blank">@item.LinkName</a><br />
+                    <div class="col-sm-12">
+                        <a href="/download/@item.LinkID"
+                           title="@Model.Blog.MovieTitle" target="_blank">@item.LinkName</a>
+                    </div>
                 }
             </div>
         </section>
@@ -125,7 +141,8 @@
                 <div>
                     @if (Model.PreNextBlog.PreBlog != null)
                     {
-                        <a href="/@(Model.PreNextBlog.PreBlog.Slug)" title="@Model.PreNextBlog.PreBlog.Title">@Model.PreNextBlog.PreBlog.Title</a>
+                        <a href="/@(Model.PreNextBlog.PreBlog.Slug)"
+                           title="@Model.PreNextBlog.PreBlog.Title">@Model.PreNextBlog.PreBlog.Title</a>
                     }
                     else
                     {
@@ -141,7 +158,8 @@
                 <div>
                     @if (Model.PreNextBlog.NextBlog != null)
                     {
-                        <a href="/@(Model.PreNextBlog.NextBlog.Slug)" title="@Model.PreNextBlog.NextBlog.Title">@Model.PreNextBlog.NextBlog.Title</a>
+                        <a href="/@(Model.PreNextBlog.NextBlog.Slug)"
+                           title="@Model.PreNextBlog.NextBlog.Title">@Model.PreNextBlog.NextBlog.Title</a>
                     }
                     else
                     {
@@ -153,10 +171,10 @@
 
         <div class="bor"></div>
         <div class="panel panel-primary comment-form-containter">
-            <div class="panel-heading">Comments <span class="badge pull-right">@Model.Blog.MovieComments.Count</span></div>
+            <div class="panel-heading">评论 <span class="badge pull-right">@Model.Blog.MovieComments.Count</span></div>
             <div class="panel-body">
                 <div>
-                    <form action="/Blog/AddComment.html" data-ajax="true" data-ajax-complete="commentComplete" data-ajax-failure="commentBlowUp" data-ajax-loading="#loadingIndicator" data-ajax-mode="replace" data-ajax-success="commentSuccess" data-ajax-update="#ajaxTarget" id="form0" method="post" novalidate="novalidate">
+                    <form action="/Movie/AddComment" data-ajax="true" data-ajax-complete="commentComplete" data-ajax-failure="commentBlowUp" data-ajax-loading="#loadingIndicator" data-ajax-mode="replace" data-ajax-success="commentSuccess" data-ajax-update="#ajaxTarget" id="form0" method="post">
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
@@ -175,19 +193,27 @@
                         </div>
                         <div class="form-group input-group">
                             <span class="input-group-addon captcha-addon">
-                                <img alt="Captcha" id="Captcha" src="/Blog/Captcha.html">
+                                <img alt="Captcha" id="Captcha" src="/Movie/Captcha">
                             </span>
-                            @Html.TextBoxFor(m => m.BlogComment.CaptchaCode, new { @class = "form-control", placeholder = "Captcha Code" })
-                            @Html.ValidationMessageFor(m => m.BlogComment.CaptchaCode)
+                            <input class="form-control" data-val="true"
+                                   data-val-required="Name 字段是必需的。"
+                                   id="BlogComment_CaptchaCode" name="BlogComment.CaptchaCode"
+                                   placeholder="验证码" type="text" value="">
+
+                            <span class="field-validation-valid"
+                                  data-valmsg-for="BlogComment.CaptchaCode" data-valmsg-replace="true"></span>
+
+                            @*@Html.TextBoxFor(m => m.BlogComment.CaptchaCode, new { @class = "form-control", placeholder = "Captcha Code" })
+                                @Html.ValidationMessageFor(m => m.BlogComment.CaptchaCode)*@
                         </div>
                         @Html.HiddenFor(m => m.BlogComment.MovieID)
-                        @Html.HiddenFor(m => m.BlogComment.IsPublic)
+                        @Html.ValidationMessageFor(m => m.BlogComment.MovieID)
                         <div class="form-group">
                             <button type="submit" class="btn btn-success">
                                 <i class="fa fa-fw fa-send"></i>
-                                Submit
+                                提 交
                             </button>
-                            <a class="btn btn-primary" data-ajax="true" data-ajax-loading="#loadingIndicator" data-ajax-mode="replace" data-ajax-update="#ajaxTarget" href="/Blog/GetApprovedCommentOfPost/@(Model.Blog.MovieID).html">See All Comments</a>
+                            <a class="btn btn-primary" data-ajax="true" data-ajax-loading="#loadingIndicator" data-ajax-mode="replace" data-ajax-update="#ajaxTarget" href="/Movie/GetApprovedCommentOfPost/@(Model.Blog.MovieID)">查看评论</a>
                         </div>
                     </form>
                 </div>
@@ -205,8 +231,8 @@
         </div>
 
         <div id="thx-for-comment" class="alert alert-warning none">
-            Thanks, your comment is pending approval now. <br>
-            It will show up once blog administrator appoved your comment.
+            谢谢, 你的评论我们已经收到. <br>
+            管理员审核之后显示.
         </div>
 
         <div id="ajaxTarget">
@@ -218,4 +244,4 @@
 </section>
 
 
-@Html.Partial("~/Views/Shared/_BlogSidebar.cshtml", Model.PopularTags)
+@Html.Partial("~/Views/Shared/_BlogSidebar.cshtml")

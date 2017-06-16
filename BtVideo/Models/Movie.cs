@@ -18,7 +18,7 @@ namespace BtVideo.Models
 		[MaxLength(15)]
 		[Required]
 		public string AuthorID { get; set; }
-		[MaxLength(56)]
+		[MaxLength(200)]
 		public string PictureFile { get; set; }
 
 		public bool IsPublic { get; set; }
@@ -31,10 +31,6 @@ namespace BtVideo.Models
         /// 地区
         /// </summary>
         public int AreaID { get; set; }
-        /// <summary>
-        /// 标签
-        /// </summary>
-        public string Tags { get; set; }
         /// <summary>
         /// 演员
         /// </summary>
@@ -55,6 +51,11 @@ namespace BtVideo.Models
         /// 添加时间
         /// </summary>
         public DateTime DateCreated { get; set; }
+
+        /// <summary>
+        /// 添加时间
+        /// </summary>
+        public DateTime DateUpdate { get; set; }
         /// <summary>
         /// 上映时间
         /// </summary>
@@ -66,15 +67,25 @@ namespace BtVideo.Models
         /// <summary>
         /// 磁力链接
         /// </summary>
-        [MaxLength(200)]
+        [MaxLength(500)]
         public string Magnet { get; set; }
+        /// <summary>
+        /// Imdb链接
+        /// </summary>
+        [MaxLength(200)]
+        public string ImdbLink { get; set; }
+        /// <summary>
+        /// Imdb title
+        /// </summary>
+        [MaxLength(50)]
+        public string ImdbTitle { get; set; }
 
         //SEO
         [MaxLength(100)]
 		public string PageTitle { get; set; }
-		[MaxLength(300)]
+		[MaxLength(500)]
 		public string MetaDescription { get; set; }
-		[MaxLength(100)]
+		[MaxLength(300)]
 		public string MetaKeywords { get; set; }
 		[MaxLength(56)]	//50 + "-" + 99,000
 		public string Slug { get; set; }
@@ -92,7 +103,20 @@ namespace BtVideo.Models
         public virtual MovieArea MovieArea { get; set; }
 
         [NotMapped]
-		public string PictureThumbnail { get { return string.IsNullOrEmpty(PictureFile) ? "default.jpg" : PictureFile; } }
+        public string PictureThumbnail
+        {
+            get
+            {
+                if (PictureFile.StartsWith("http"))
+                {
+                    return PictureFile;
+                }
+                else
+                {
+                    return PictureFolder + "/" + (string.IsNullOrEmpty(PictureFile) ? "default.jpg" : PictureFile);
+                }
+            }
+        }
         [NotMapped]
         public string PictureFolder { get { return "/Content/Pictures/Blog"; } }
 

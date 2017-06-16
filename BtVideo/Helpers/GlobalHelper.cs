@@ -7,9 +7,32 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace BtVideo.Helpers
 {
+    public class GlobalFilter : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+
+            var url = System.Web.HttpContext.Current.Request.ServerVariables["SERVER_NAME"].ToLower();
+            //WriteInLog(url);
+            var list = new List<string>();
+            list.Add("www.114.center");
+            list.Add("114.center");
+
+            if (list.Contains(url))
+            {
+                string newurl = "http://bt.henhaoji.com.cn" + System.Web.HttpContext.Current.Request.RawUrl;
+                System.Web.HttpContext.Current.Response.Clear();
+                System.Web.HttpContext.Current.Response.StatusCode = 301;
+                System.Web.HttpContext.Current.Response.Status = "301 Moved Permanently";
+                System.Web.HttpContext.Current.Response.AddHeader("Location", newurl);
+            }
+        }
+    }
+
     public class GlobalHelper
     {
         public static int UserID

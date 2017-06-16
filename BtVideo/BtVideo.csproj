@@ -155,12 +155,14 @@
     <Content Include="App_Themes\home\images\dog-sniffing-ground.png" />
     <Content Include="App_Themes\home\scripts\bootstrap.ediblog.slidemenu.min.js" />
     <Content Include="App_Themes\home\scripts\bootstrap.min.js" />
+    <Content Include="App_Themes\home\scripts\btvideo.app.js" />
     <Content Include="App_Themes\home\scripts\jquery-3.1.1.js" />
     <Content Include="App_Themes\home\scripts\jquery-3.1.1.min.js" />
     <Content Include="App_Themes\home\scripts\jquery.lazyload.min.js" />
     <Content Include="App_Themes\home\scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="App_Themes\home\scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="App_Themes\home\scripts\prettify.js" />
+    <Content Include="Content\Images\006HJ39wgy1fghxod7318j30xc0akgqm.jpg" />
     <Content Include="Content\Images\1e33cee08f34e707.jpg" />
     <Content Include="Content\Images\8f6761a0d4edebad.jpg" />
     <Content Include="Content\Pictures\Blog\201706\5-5.jpg" />
@@ -342,6 +344,7 @@
     <Content Include="Scripts\jquery.nivo.slider.pack.js" />
     <Content Include="Scripts\jquery.ui.custom.js" />
     <Content Include="Scripts\jquery.ui.selectmenu.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -364,8 +367,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Captcha.cs" />
     <Compile Include="Helpers\GlobalHelper.cs" />
     <Compile Include="Helpers\HttpErrorModule.cs" />
+    <Compile Include="Helpers\LogHelper.cs" />
     <Compile Include="Helpers\Utilities.cs" />
     <Compile Include="Migrations\201706041100220_InitialCreate.cs" />
     <Compile Include="Migrations\201706041100220_InitialCreate.Designer.cs">
@@ -383,9 +388,54 @@
     <Compile Include="Migrations\201706080553183_InitialCreate3.Designer.cs">
       <DependentUpon>201706080553183_InitialCreate3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706100247253_InitialCreate4.cs" />
+    <Compile Include="Migrations\201706100247253_InitialCreate4.Designer.cs">
+      <DependentUpon>201706100247253_InitialCreate4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706110456406_InitialCreate5.cs" />
+    <Compile Include="Migrations\201706110456406_InitialCreate5.Designer.cs">
+      <DependentUpon>201706110456406_InitialCreate5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706110600103_InitialCreate6.cs" />
+    <Compile Include="Migrations\201706110600103_InitialCreate6.Designer.cs">
+      <DependentUpon>201706110600103_InitialCreate6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706140704460_InitialCreate7.cs" />
+    <Compile Include="Migrations\201706140704460_InitialCreate7.Designer.cs">
+      <DependentUpon>201706140704460_InitialCreate7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706150406087_InitialCreate8.cs" />
+    <Compile Include="Migrations\201706150406087_InitialCreate8.Designer.cs">
+      <DependentUpon>201706150406087_InitialCreate8.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706150613511_InitialCreate9.cs" />
+    <Compile Include="Migrations\201706150613511_InitialCreate9.Designer.cs">
+      <DependentUpon>201706150613511_InitialCreate9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706150638334_InitialCreate10.cs" />
+    <Compile Include="Migrations\201706150638334_InitialCreate10.Designer.cs">
+      <DependentUpon>201706150638334_InitialCreate10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706150850465_InitialCreate11.cs" />
+    <Compile Include="Migrations\201706150850465_InitialCreate11.Designer.cs">
+      <DependentUpon>201706150850465_InitialCreate11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706160138384_InitialCreate12.cs" />
+    <Compile Include="Migrations\201706160138384_InitialCreate12.Designer.cs">
+      <DependentUpon>201706160138384_InitialCreate12.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706160215521_InitialCreate13.cs" />
+    <Compile Include="Migrations\201706160215521_InitialCreate13.Designer.cs">
+      <DependentUpon>201706160215521_InitialCreate13.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706160251557_InitialCreate14.cs" />
+    <Compile Include="Migrations\201706160251557_InitialCreate14.Designer.cs">
+      <DependentUpon>201706160251557_InitialCreate14.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin\BaseObject.cs" />
     <Compile Include="Models\Admin\BlogViewModel.cs" />
+    <Compile Include="Models\HotKeyword.cs" />
     <Compile Include="Models\MovieArea.cs" />
     <Compile Include="Models\Movie.cs" />
     <Compile Include="Models\MovieCategory.cs" />
@@ -411,10 +461,12 @@
     <Compile Include="Models\Site\LoginViewModel.cs" />
     <Compile Include="Models\MovieStar.cs" />
     <Compile Include="Models\Site\StarType.cs" />
+    <Compile Include="Models\SpiderTask.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Models\UserRoleJoin.cs" />
+    <Compile Include="Models\WebLink.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BlogService.cs" />
     <Compile Include="Services\MembershipService.cs" />
@@ -472,6 +524,8 @@
     <Content Include="Content\Bt\4\4-【BluRay 720p】深夜食堂电影版2・深夜食堂 .2016.4.38GBBT种子下载.torrent" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Movie\GetApprovedCommentOfPost.cshtml" />
+    <Content Include="Views\Movie\NotFound.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -496,6 +550,39 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706080553183_InitialCreate3.resx">
       <DependentUpon>201706080553183_InitialCreate3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706100247253_InitialCreate4.resx">
+      <DependentUpon>201706100247253_InitialCreate4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706110456406_InitialCreate5.resx">
+      <DependentUpon>201706110456406_InitialCreate5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706110600103_InitialCreate6.resx">
+      <DependentUpon>201706110600103_InitialCreate6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706140704460_InitialCreate7.resx">
+      <DependentUpon>201706140704460_InitialCreate7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706150406087_InitialCreate8.resx">
+      <DependentUpon>201706150406087_InitialCreate8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706150613511_InitialCreate9.resx">
+      <DependentUpon>201706150613511_InitialCreate9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706150638334_InitialCreate10.resx">
+      <DependentUpon>201706150638334_InitialCreate10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706150850465_InitialCreate11.resx">
+      <DependentUpon>201706150850465_InitialCreate11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706160138384_InitialCreate12.resx">
+      <DependentUpon>201706160138384_InitialCreate12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706160215521_InitialCreate13.resx">
+      <DependentUpon>201706160215521_InitialCreate13.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706160251557_InitialCreate14.resx">
+      <DependentUpon>201706160251557_InitialCreate14.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
