@@ -1,10 +1,78 @@
-﻿<aside class="col-lg-3 hidden-md hidden-sm hidden-xs">
+﻿<aside class="col-lg-3 col-md-3 col-sm-12 col-xs-12 mt-20">
+
+    @{
+        var bs = new BtVideo.Services.BlogService();
+        var ss = new BtVideo.Services.SiteService();
+    }
+
+    <section class="top-tags">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#home" aria-controls="home" role="tab" data-toggle="tab">本周热门</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#grade" aria-controls="grade" role="tab" data-toggle="tab">最高评分</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#new" aria-controls="new" role="tab" data-toggle="tab">最新更新</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="home">
+                        <ul class="list-group">
+                            @foreach (var item in bs.GetBlogs().OrderByDescending(m => m.PageVisits).Take(10).ToList())
+                            {
+                                <li class="list-group-item">
+                                    <a href="/@item.MovieID" title="@item.MovieTitle">
+                                        <span class="badge">@item.Grade.ToString("0.0")</span>
+                                        @item.MovieTitle
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="grade">
+                        <ul class="list-group">
+                            @foreach (var item in bs.GetBlogs().OrderByDescending(m => m.Grade).Take(10).ToList())
+                            {
+                                <li class="list-group-item">
+                                    <a href="/@item.MovieID" title="@item.MovieTitle">
+                                        <span class="badge">@item.Grade.ToString("0.0")</span>
+                                        @item.MovieTitle
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="new">
+                        <ul class="list-group">
+                            @foreach (var item in bs.GetBlogs().OrderByDescending(m => m.DateUpdate).Take(10).ToList())
+                            {
+                                <li class="list-group-item">
+                                    <a href="/@item.MovieID" title="@item.MovieTitle">
+                                        <span class="badge">@item.Grade.ToString("0.0")</span>
+                                        @item.MovieTitle
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="top-tags">
         <div class="panel panel-default">
             <div class="panel-heading">热门搜索</div>
             <div class="panel-body">
                 <div class="toptags-list">
-                    @foreach (var item in new BtVideo.Services.SiteService().GetKeywords().OrderByDescending(m => m.Count).Take(10).ToList())
+                    @foreach (var item in ss.GetKeywords().OrderByDescending(m => m.Count).Take(10).ToList())
                     {
                         <a href="/list?keywords=@(item.Keyword)" title="@item.Keyword">@item.Keyword</a>
                     }
@@ -17,7 +85,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">最近评论</div>
             <div class="list-group">
-                @foreach (var item in new BtVideo.Services.BlogService().GetComments().Where(m => m.IsPublic == true).Take(10).ToList())
+                @foreach (var item in bs.GetComments().Where(m => m.IsPublic == true).Take(10).ToList())
                 {
                     <div class="list-group-item">
                         <strong data-toggle="tooltip" data-placement="top" title="" data-original-title="@item.DateCreated">
@@ -36,43 +104,27 @@
         </div>
     </section>
     <div class="bor"></div>
-    <section class="friend-anks">
-        <div class="panel panel-default">
-            <div class="panel-heading">友情链接</div>
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <i class="fa fa-fw fa-link text-muted icon-fdlink"></i>
-                    <a href="http://www.henhaoji.com.cn" target="_blank">
-                        yuabd's blog
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </section>
-    <div class="bor"></div>
-    <section class="visible-lg visible-xs visible-md visible-sm visible-xs">
-        @*<a data-type="13" data-tmpl="230x312" data-tmplid="210" data-rd="2" data-style="2" data-border="1" href="#"></a>
-        <a data-type="5" data-tmpl="210x200" data-tmplid="135" data-style="2" data-border="1" href="#">淘宝充值</a>*@
-    </section>
+    @if (HttpContext.Current.Request.Url.ToString().ToLower() == "http://bt.henhaoji.com.cn/")
+    {
+        <section class="friend-anks">
+            <div class="panel panel-default">
+                <div class="panel-heading">友情链接</div>
+                <ul class="list-group">
+                    @foreach (var item in ss.GetLinks())
+                {
+                        <li class="list-group-item">
+                            <i class="fa fa-fw fa-link text-muted icon-fdlink"></i>
+                            <a href="@item.LinkUrl" target="_blank">
+                                @item.Name
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </section>
+        <div class="bor"></div>
+    }
+
+    <section class="visible-lg visible-xs visible-md visible-sm visible-xs"></section>
 </aside>
 
-
-@*<script type="text/javascript">
-    (function(win,doc){
-        var s = doc.createElement("script"), h = doc.getElementsByTagName("head")[0];
-        if (!win.alimamatk_show) {
-            s.charset = "gbk";
-            s.async = true;
-            s.src = "https://alimama.alicdn.com/tkapi.js";
-            h.insertBefore(s, h.firstChild);
-        };
-        var o = {
-            pid: "mm_43017247_26536259_104164351",/*推广单元ID，用于区分不同的推广渠道*/
-            appkey: "",/*通过TOP平台申请的appkey，设置后引导成交会关联appkey*/
-            unid: "",/*自定义统计字段*/
-            type: "click" /* click 组件的入口标志 （使用click组件必设）*/
-        };
-        win.alimamatk_onload = win.alimamatk_onload || [];
-        win.alimamatk_onload.push(o);
-    })(window,document);
-</script>*@

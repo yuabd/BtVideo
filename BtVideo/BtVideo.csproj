@@ -432,6 +432,18 @@
     <Compile Include="Migrations\201706160251557_InitialCreate14.Designer.cs">
       <DependentUpon>201706160251557_InitialCreate14.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706161645413_InitialCreate15.cs" />
+    <Compile Include="Migrations\201706161645413_InitialCreate15.Designer.cs">
+      <DependentUpon>201706161645413_InitialCreate15.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706161710345_InitialCreate16.cs" />
+    <Compile Include="Migrations\201706161710345_InitialCreate16.Designer.cs">
+      <DependentUpon>201706161710345_InitialCreate16.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706170303243_InitialCreate17.cs" />
+    <Compile Include="Migrations\201706170303243_InitialCreate17.Designer.cs">
+      <DependentUpon>201706170303243_InitialCreate17.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin\BaseObject.cs" />
     <Compile Include="Models\Admin\BlogViewModel.cs" />
@@ -526,6 +538,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Movie\GetApprovedCommentOfPost.cshtml" />
     <Content Include="Views\Movie\NotFound.cshtml" />
+    <Content Include="Views\Shared\_ListPage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -583,6 +596,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706160251557_InitialCreate14.resx">
       <DependentUpon>201706160251557_InitialCreate14.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706161645413_InitialCreate15.resx">
+      <DependentUpon>201706161645413_InitialCreate15.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706161710345_InitialCreate16.resx">
+      <DependentUpon>201706161710345_InitialCreate16.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706170303243_InitialCreate17.resx">
+      <DependentUpon>201706170303243_InitialCreate17.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

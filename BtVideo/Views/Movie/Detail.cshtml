@@ -13,16 +13,38 @@
 
     <script>
         $(function () {
-            $("img").lazyload({
-                effect: "fadeIn"
-            });
-
+            rator.registerRatingButtons();
             $("#Captcha").on("click", function () { $(this).attr("src", "/Movie/Captcha"); })
         });
     </script>
 }
-
-<section class="col-lg-9 col-md-12">
+<ol class="breadcrumb mt-20">
+    <li>
+        <a href="/">首页</a>
+    </li>
+    @if (Model.Blog.MovieCategoryJoins.Any(m => m.CategoryID == 3))
+    {
+        <li>
+            <a href="/list3" title="电影">电影</a>
+        </li>
+    }
+    else if (Model.Blog.MovieCategoryJoins.Any(m => m.CategoryID == 4))
+    {
+        <li>
+            <a href="/list4" title="电视剧">电视剧</a>
+        </li>
+    }
+    else if (Model.Blog.MovieCategoryJoins.Any(m => m.CategoryID == 38))
+    {
+        <li>
+            <a href="/list38" title="动漫">动漫</a>
+        </li>
+    }
+    <li>
+        <a href="/@Model.Blog.MovieID" title="@Model.Blog.MovieTitle" class="active">@Model.Blog.MovieTitle</a>
+    </li>
+</ol>
+<section class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
     <article>
         <header class="post-header">
             <h3 class="post-title">
@@ -57,68 +79,85 @@
             <hr class="post-header-hr mt0">
         </header>
         <section class="post-content clearfix">
-            <div class="col-sm-4">
-                <img src="@Model.Blog.PictureThumbnail"
-                     style="width: 100%;" alt="@Model.Blog.MovieTitle" />
-            </div>
-            <div class="col-sm-8">
-                <h1>@Model.Blog.MovieTitle</h1>
-                <div class="row">
-                    <div class="col-sm-2">更新:</div>
-                    <div class="col-sm-10">@Model.Blog.DateCreated.ToString("yyyy-MM-dd HH:mm:ss")</div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <img data-original="@Model.Blog.PictureThumbnail"
+                         style="width: 100%;" alt="@Model.Blog.MovieTitle" />
                 </div>
-                @if (!string.IsNullOrWhiteSpace(Model.Blog.ImdbLink))
-                {
+                <div class="col-sm-8">
+                    <h1>@Model.Blog.MovieTitle</h1>
                     <div class="row">
-                        <div class="col-sm-2">IMDb:</div>
-                        <div class="col-sm-9">
-                            <a href="@Model.Blog.ImdbLink" target="_blank" rel="nofollow"
-                               title="@Model.Blog.ImdbTitle">@Model.Blog.ImdbTitle</a>
+                        <div class="col-sm-2">更新:</div>
+                        <div class="col-sm-10">@Model.Blog.DateCreated.ToString("yyyy-MM-dd HH:mm:ss")</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">类型:</div>
+                        <div class="col-sm-10">
+                            @foreach (var item in Model.Blog.MovieCategoryJoins)
+                            {
+                                <a href="/list@(item.CategoryID)" title="@item.MovieCategory.CategoryName">
+                                    @item.MovieCategory.CategoryName
+                                </a>
+                                @:&nbsp;&nbsp;
+                            }
                         </div>
                     </div>
-                }
-                <div class="row">
-                    <div class="col-sm-2">地区:</div>
-                    <div class="col-sm-10">@Model.Blog.MovieArea.AreaName</div>
-                </div>
-                @if (!string.IsNullOrWhiteSpace(Model.Blog.Director))
-                {
                     <div class="row">
-                        <div class="col-sm-2">导演:</div>
-                        <div class="col-sm-10">@Model.Blog.Director</div>
+                        <div class="col-sm-2">地区:</div>
+                        <div class="col-sm-10">@Model.Blog.MovieArea.AreaName</div>
                     </div>
-                }
-                <div class="row">
-                    <div class="col-sm-2">主演:</div>
-                    <div class="col-sm-10">
-                        @foreach (var item in Model.Blog.Stars.Split('|'))
-                        {
-                            <a href="/star/@item" title="@item">
-                                @item
-                            </a>
-                            @:&nbsp;&nbsp;
-                        }
+                    @if (!string.IsNullOrWhiteSpace(Model.Blog.Director))
+                    {
+                        <div class="row">
+                            <div class="col-sm-2">导演:</div>
+                            <div class="col-sm-10">@Model.Blog.Director</div>
+                        </div>
+                    }
+                    <div class="row">
+                        <div class="col-sm-2">主演:</div>
+                        <div class="col-sm-10">
+                            @foreach (var item in Model.Blog.Stars.Split('|'))
+                            {
+                                <a href="/star/@item" title="@item">
+                                    @item
+                                </a>
+                                @:&nbsp;&nbsp;
+                            }
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-2">上映:</div>
-                    <div class="col-sm-9">@Model.Blog.ShowDate.ToString("yyyy-MM-dd")</div>
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Blog.ImdbLink))
+                    {
+                        <div class="row">
+                            <div class="col-sm-2">IMDb:</div>
+                            <div class="col-sm-9">
+                                <a href="@Model.Blog.ImdbLink" target="_blank" rel="nofollow"
+                                   title="@Model.Blog.ImdbTitle">@Model.Blog.ImdbTitle</a>
+                            </div>
+                        </div>
+                    }
+                    <div class="row">
+                        <div class="col-sm-2">上映:</div>
+                        <div class="col-sm-9">@Model.Blog.ShowDate.ToString("yyyy")</div>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-12">
+            <div class="col-md-12">
                 <h2>剧情介绍：</h2>
-                @Html.Raw(Model.Blog.MovieContent)
+                <p class="lead">
+                    @Html.Raw(Model.Blog.MovieContent)
+                </p>
             </div>
 
             @if (!string.IsNullOrWhiteSpace(Model.Blog.Magnet))
             {
-                <div class="col-sm-12">
+                <div class="col-md-12">
                     <h2>磁力链接：</h2>
                     <input type="text" class="form-control" value="@Model.Blog.Magnet" />
                 </div>
             }
 
-            <div class="col-sm-12">
+            <div class="col-md-12">
                 <h2>种子：</h2>
                 @foreach (var item in Model.Blog.MovieLinks)
                 {
@@ -129,6 +168,16 @@
                 }
             </div>
         </section>
+        <div class="post-slug-actions clearfix">
+            <div class="pull-right">
+                <button class="btn icon-btn btn-success btn-ratings"
+                        data-postid="@Model.Blog.MovieID" data-islike="true">
+                    <span class="glyphicon btn-glyphicon glyphicon-thumbs-up img-circle text-success"></span>
+                    赞 (<span class="likehits-num">@Model.Blog.LikeCount</span>)
+                </button>
+            </div>
+            <span class="text-muted none ratemessage">感谢点赞！</span>
+        </div>
         <div class="bor visible-xs"></div>
     </article>
     <div class="hidden-print">
@@ -170,6 +219,43 @@
         </div>
 
         <div class="bor"></div>
+        <div class="row">
+            <h3 id="grid" class="page-header">随机推荐<small>全站万部影片随机推荐</small></h3>
+            @foreach (var item in (List<BtVideo.Models.Movie>)ViewBag.suiji)
+            {
+                <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+                    <div class="thumbnail">
+                        <a href="/@item.MovieID" title="@item.MovieTitle">
+                            <div class="movie-img">
+                                <img data-original="http://bt.henhaoji.com.cn/@(item.PictureThumbnail)" 
+                                     alt="@item.MovieTitle" />
+                            </div>
+                        </a>
+                        <div class="caption">
+                            <a href="/@item.MovieID" title="@item.MovieTitle">
+                                <h5 class="cut">@(item.MovieTitle)</h5>
+                                <p>
+                                    <span>
+                                        <i class="glyphicon glyphicon-eye-open"></i>
+                                        @item.PageVisits
+                                    </span>
+                                    <span class="hidden-xs hidden-sm">
+                                        <i class="glyphicon glyphicon-thumbs-up">
+                                        </i>
+                                        @item.LikeCount
+                                    </span>
+                                    <span>
+                                        <i class="glyphicon glyphicon-star"></i>
+                                        @item.Grade.ToString("0.0")
+                                    </span>
+                                </p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="bor"></div>
         <div class="panel panel-primary comment-form-containter">
             <div class="panel-heading">评论 <span class="badge pull-right">@Model.Blog.MovieComments.Count</span></div>
             <div class="panel-body">
@@ -203,8 +289,6 @@
                             <span class="field-validation-valid"
                                   data-valmsg-for="BlogComment.CaptchaCode" data-valmsg-replace="true"></span>
 
-                            @*@Html.TextBoxFor(m => m.BlogComment.CaptchaCode, new { @class = "form-control", placeholder = "Captcha Code" })
-                                @Html.ValidationMessageFor(m => m.BlogComment.CaptchaCode)*@
                         </div>
                         @Html.HiddenFor(m => m.BlogComment.MovieID)
                         @Html.ValidationMessageFor(m => m.BlogComment.MovieID)

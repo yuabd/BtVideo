@@ -6,6 +6,8 @@ using BtVideo.Models.Site;
 using BtVideo.Models.Others;
 using BtVideo.Helpers;
 using System.IO;
+using System;
+using System.Web;
 
 namespace BtVideo.Controllers
 {
@@ -29,30 +31,46 @@ namespace BtVideo.Controllers
                     sites.SaveKeyword(item.Trim());
 
                     blogs = (from l in blogs
-                             where l.MovieTitle.Contains(item) || l.MovieContent.Contains(item)
+                             where l.MovieTitle.Contains(item) 
+                             || l.Stars.Contains(item) || l.Director.Contains(item)
                              select l);
                 }
             }
 
+            //根据分类搜索
             if (id.HasValue)
             {
                 blogs = (from l in blogs
-
                          where l.MovieCategoryJoins.Any(m => m.CategoryID == id.Value)
                          select l);
             }
 
-            ViewBag.Count = blogs.Select(m => m.MovieID).Count();
-
-            var pBlogs = new Paginated<Movie>(blogs.ToList(), page ?? 1, 8);
-
-            //var popularTags = (from p in bs.GetTags()
-            //                   group p by new { p.Tag } into t
-            //                   orderby t.Count() descending
-            //                   select new Anonymous { Tag = t.Key.Tag, Num = t.Count() }).Take(10).ToList();
+            var pBlogs = new Paginated<Movie>(blogs.ToList(), page ?? 1, 24);
 
             var model = new BlogsViewModel(pBlogs, null, null, null);
-            ViewBag.PageTitle = string.IsNullOrEmpty(keywords) ? "所有影片" : "搜索结果: " + keywords;
+            if (!string.IsNullOrEmpty(keywords))
+            {
+                ViewBag.PageTitle = keywords;
+            }
+            else if (id.HasValue)
+            {
+                ViewBag.Category = bs.GetBlogCategory(id.Value);
+                ViewBag.PageTitle = "最新" + ViewBag.Category.CategoryName;
+                if (id != 3 || id != 4 || id != 38)
+                {
+                    ViewBag.PageTitle += "电影电视剧";
+                }
+            }
+            else
+            {
+                ViewBag.PageTitle = "所有影片";
+            }
+
+            //ViewBag.PageTitle = string.IsNullOrEmpty(keywords) ? "所有影片" : "搜索结果: " + keywords;
+            if (page.HasValue)
+            {
+                ViewBag.PageTitle += "_第" + page + "页";
+            }
 
             return View(model);
         }
@@ -64,25 +82,19 @@ namespace BtVideo.Controllers
 
             if (blog == null)
             {
-                //string newurl = "http://www.henhaoji.com.cn" + System.Web.HttpContext.Current.Request.RawUrl;
                 System.Web.HttpContext.Current.Response.Clear();
                 System.Web.HttpContext.Current.Response.StatusCode = 404;
                 System.Web.HttpContext.Current.Response.Status = "404 Moved Permanently";
-                //System.Web.HttpContext.Current.Response.AddHeader("Location", "");
-                //Response.Redirect("/404.html");
+
                 return View("NotFound");
             }
-
-            //var blogComment = new BlogComment();
+            
             var blogID = blog == null ? 0 : blog.MovieID;
-
-            //var blogComments = bs.GetBlogComments(blogID).Where(m => m.IsPublic == true).ToList();
-            //var categories = bs.GetBlogCategories().ToList();
-            //var popularTags = bs.GetPopularTags().Take(10).ToList();
-            //var archives = bs.GetArchives().ToList();
-
+            
             var preNextBlog = bs.GetPreNextBlog(blogID);
             var model = new BlogViewModel(blog, new MovieComment() { MovieID = blog.MovieID }, null, null, null, null, preNextBlog);
+
+            ViewBag.suiji = bs.GetBlogs().OrderBy(m => Guid.NewGuid()).Take(4).ToList();
 
             ViewBag.Blog = "current";
             return View(model);
@@ -170,6 +182,42 @@ namespace BtVideo.Controllers
             {
                 return File(new FileStream(HttpContext.Server.MapPath(download.PictureFolder + "/" + download.LinkUrl), FileMode.Open), "application/octet-stream", Server.UrlEncode(download.LinkName));
             }
+        }
+
+        /// <summary>
+        /// 赞
+        /// </summary>
+        /// <returns></returns>
+        [Route("~/like/{id}")]
+        public ActionResult Like(int id)
+        {
+            try
+            {
+                var ses = HttpContext.Request.Cookies["like-" + id];
+
+                if (ses == null)
+                {
+                    var movie = bs.GetBlog(id);
+
+                    movie.LikeCount += 1;
+
+                    bs.Save();
+
+                    HttpCookie cookie = new HttpCookie("like-" + id);
+                    cookie.Value = id.ToString();
+                    HttpContext.Response.Cookies.Add(cookie);
+
+                    return Json(new { IsSuccess = 1 }, JsonRequestBehavior.AllowGet);
+                }
+
+                return Json(new { Message = "你已经点过赞了！" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                LogHelper.WriteLog("点赞", e.Message);
+            }
+
+            return Json(new { Message = "未知错误" }, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -94,11 +94,11 @@ namespace BtVideo.Services
             return obj;
         }
 
-        public List<Links> GetLinks()
+        public IQueryable<Links> GetLinks()
         {
             var list = (from l in db.Links
                         orderby l.SortOrder descending
-                        select l).ToList();
+                        select l);
 
             return list;
         }

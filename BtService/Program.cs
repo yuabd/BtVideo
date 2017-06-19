@@ -46,7 +46,7 @@ namespace BtService
             //        var s = System.Text.Encoding.Default.GetString(ms.ToArray()).Split(',');
 
             //        var point = (double.Parse(s[2]) / double.Parse(s[3]));
-            //        blog.Grade = point;
+            //        blog.Grade = point > 0 ? point : 0;
             //    }
             //}
             //catch (Exception)

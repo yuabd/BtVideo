@@ -21,9 +21,9 @@ namespace BtVideo.Controllers
         {
             var blogs = bs.GetBlogs().Where(m => m.IsPublic == true);
             
-            ViewBag.Count = blogs.Select(m => m.MovieID).Count();
+            //ViewBag.Count = blogs.Select(m => m.MovieID).Count();
 
-            var pBlogs = new Paginated<Movie>(blogs.ToList(), page ?? 1, 8);
+            var pBlogs = new Paginated<Movie>(blogs.ToList(), page ?? 1, 24);
 
 
             var popularTags = (from p in bs.GetTags()
@@ -31,11 +31,8 @@ namespace BtVideo.Controllers
                                orderby t.Count() descending
                                select new Anonymous { Tag = t.Key.Tag, Num = t.Count() }).Take(10).ToList();
 
-            //var archives = bs.GetArchives().ToList();
-
             var model = new BlogsViewModel(pBlogs, null, popularTags, null);
             ViewBag.PageTitle = "很好记bt";
-            ViewBag.Blog = "current";
 
             return View("~/Views/Movie/Index.cshtml", model);
         }

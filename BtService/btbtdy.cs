@@ -50,7 +50,8 @@ namespace BtService
         {
             base.GetHtmlCont();
 
-            if (string.IsNullOrEmpty(base.HtmlCont) || base.HtmlCont.Contains("该影片不存在"))
+            if (string.IsNullOrEmpty(base.HtmlCont) || base.HtmlCont.Contains("该影片不存在")
+                || base.HtmlCont.Contains("该视频被删除或隐藏"))
             {
                 Err = true;
                 return null;
@@ -151,7 +152,22 @@ namespace BtService
                 {
                     value = match.Groups["area"].ToString();
                     var areaS = db.MovieAreas.Where(m => m.AreaName == value).FirstOrDefault();
-                    model.AreaID = areaS == null ? 0 : areaS.AreaID;
+
+                    if (areaS == null)
+                    {
+                        model.MovieArea = new MovieArea()
+                        {
+                            AreaName = value
+                        };
+                    }
+                    else
+                    {
+                        model.AreaID = areaS.AreaID;
+                    }
+                }
+                else
+                {
+                    model.AreaID = 1;
                 }
 
                 //类型

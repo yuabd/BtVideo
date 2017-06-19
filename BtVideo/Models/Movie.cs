@@ -67,7 +67,7 @@ namespace BtVideo.Models
         /// <summary>
         /// 磁力链接
         /// </summary>
-        [MaxLength(500)]
+        [MaxLength(1000)]
         public string Magnet { get; set; }
         /// <summary>
         /// Imdb链接

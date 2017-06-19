@@ -40,7 +40,9 @@ G:\github\Bt\BtVideo\BtService\bin\Debug\System.Web.Razor.dll
 G:\github\Bt\BtVideo\BtService\bin\Debug\System.Web.WebPages.Razor.dll
 G:\github\Bt\BtVideo\BtService\bin\Debug\System.Web.WebPages.dll
 G:\github\Bt\BtVideo\BtService\bin\Debug\Microsoft.Web.Infrastructure.dll
+G:\github\Bt\BtVideo\BtService\bin\Debug\WebGrease.dll
 G:\github\Bt\BtVideo\BtService\bin\Debug\System.Web.WebPages.Deployment.dll
+G:\github\Bt\BtVideo\BtService\bin\Debug\Antlr3.Runtime.dll
 G:\github\Bt\BtVideo\BtService\bin\Debug\BtVideo.pdb
 G:\github\Bt\BtVideo\BtService\bin\Debug\BtVideo.dll.config
 G:\github\Bt\BtVideo\BtService\bin\Debug\EntityFramework.xml
@@ -55,6 +57,7 @@ G:\github\Bt\BtVideo\BtService\bin\Debug\System.Web.Razor.xml
 G:\github\Bt\BtVideo\BtService\bin\Debug\System.Web.WebPages.Razor.xml
 G:\github\Bt\BtVideo\BtService\bin\Debug\System.Web.WebPages.xml
 G:\github\Bt\BtVideo\BtService\bin\Debug\System.Web.WebPages.Deployment.xml
+G:\github\Bt\BtVideo\BtService\bin\Debug\Antlr3.Runtime.pdb
 G:\github\Bt\BtVideo\BtService\bin\Debug\zh-Hans\System.Web.Http.resources.dll
 G:\github\Bt\BtVideo\BtService\bin\Debug\zh-Hans\System.Web.Mvc.resources.dll
 G:\github\Bt\BtVideo\BtService\bin\Debug\zh-Hans\System.Web.Http.WebHost.resources.dll

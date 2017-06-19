@@ -272,7 +272,7 @@ namespace BtVideo.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                model.LinkUrl = "1";
+                model.LinkUrl = model.Magnet;
                 blogService.InsertMovieLink(model);
                 // file
                 if (file.ContentLength > 0)
