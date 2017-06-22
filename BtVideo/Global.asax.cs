@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
-using System.Web.SessionState;
 using System.Web.Http;
 using BtVideo.App_Start;
 using System.Web.Optimization;
-using System.Data.Entity;
-using BtVideo.Models;
+using BtVideo.Helpers;
 
 namespace BtVideo
 {
@@ -19,6 +15,8 @@ namespace BtVideo
         void Application_Start(object sender, EventArgs e)
         {
             //Database.SetInitializer<SiteDataContext>(new SiteDataContextInitializer());
+
+            IndexManager.bookIndex.StartNewThread();
 
             // 在应用程序启动时运行的代码
             AreaRegistration.RegisterAllAreas();

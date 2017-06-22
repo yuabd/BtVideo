@@ -23,7 +23,7 @@ namespace BtVideo.Models.Others
 		// Private
 		private MvcHtmlString _pageList;
 
-		public Paginated(IEnumerable<T> source, int pageIndex, int pageSize)
+		public Paginated(IQueryable<T> source, int pageIndex, int pageSize)
 		{
 			PageIndex = pageIndex;
 			TotalRecords = source.Count();
@@ -39,7 +39,23 @@ namespace BtVideo.Models.Others
 			this.AddRange(source.Skip((PageIndex - 1) * PageSize).Take(PageSize));
 		}
 
-		public MvcHtmlString Pager()
+        public Paginated(IQueryable<T> source, int pageIndex, int pageSize, int count)
+        {
+            PageIndex = pageIndex;
+            TotalRecords = count;
+            PageSize = pageSize;
+
+            TotalPages = (int)Math.Ceiling(TotalRecords / (double)PageSize);
+            PageRange = 10;
+
+            PreviousNext = true;
+            Continued = true;
+            Advanced = true;
+
+            this.AddRange(source);
+        }
+
+        public MvcHtmlString Pager()
 		{
 			return _pageList;
 		}

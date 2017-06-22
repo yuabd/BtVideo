@@ -23,7 +23,10 @@ $(function () {
         //placeholder: "images/loading.gif",
         effect: "fadeIn"
     });
-
+    //$("#btn-search").click(function () {
+    //    var n = "/search/" + $("#txtSearch").val();
+    //    window.location.href = n;
+    //});
 
 });
 

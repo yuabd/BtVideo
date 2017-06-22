@@ -22,7 +22,7 @@ namespace BtService
 
             //var task = db.SpiderTasks.FirstOrDefault(m => m.SpiderTaskID == 1);
 
-            //var url = "http://www.btbtdy.com/btdy/dy" + task.CurrentID + ".html";
+            //var url = "http://www.btbtdy.com/btdy/dy6679.html";
             //btbtdy b = new btbtdy(url);
 
             //bool err = false;

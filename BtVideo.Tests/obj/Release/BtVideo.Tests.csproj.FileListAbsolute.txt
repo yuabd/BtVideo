@@ -1,3 +1,10 @@
+G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\Dict\ChsDoubleName1.txt
+G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\Dict\ChsDoubleName2.txt
+G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\Dict\ChsSingleName.txt
+G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\Dict\Stopword.txt
+G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\Dict\Synonym.txt
+G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\Dict\Wildcard.txt
+G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\Dict\Dict.dct
 G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\roslyn\csc.exe
 G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\roslyn\csc.exe.config
 G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\roslyn\csc.rsp
@@ -32,8 +39,12 @@ G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\Microsoft.VisualStudio.QualityToo
 G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\System.Web.Http.dll
 G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\System.Web.Mvc.dll
 G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\EntityFramework.dll
+G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\Lucene.Net.dll
+G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\PanGu.HighLight.dll
 G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\System.Web.Optimization.dll
 G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\System.Web.Http.WebHost.dll
+G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\PanGu.Lucene.Analyzer.dll
+G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\PanGu.dll
 G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\System.Net.Http.Formatting.dll
 G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\Newtonsoft.Json.dll
 G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\System.Web.Razor.dll
@@ -46,8 +57,12 @@ G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\BtVideo.dll.config
 G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\System.Web.Http.xml
 G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\System.Web.Mvc.xml
 G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\EntityFramework.xml
+G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\Lucene.Net.pdb
+G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\Lucene.Net.xml
+G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\PanGu.HighLight.pdb
 G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\System.Web.Optimization.xml
 G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\System.Web.Http.WebHost.xml
+G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\PanGu.pdb
 G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\System.Net.Http.Formatting.xml
 G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\Newtonsoft.Json.xml
 G:\github\Bt\BtVideo\BtVideo.Tests\bin\Release\System.Web.Razor.xml

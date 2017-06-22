@@ -20,9 +20,17 @@ namespace BtVideo.Areas.Admin.Controllers
 
         //
         // GET: /Admin/Blog/
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? page, string key)
         {
             var blogs = blogService.GetBlogs();
+
+            if (!string.IsNullOrWhiteSpace(key))
+            {
+                blogs = from l in blogs
+                        where l.MovieTitle.Contains(key)
+                        select l;
+            }
+
             var pblogs = new Paginated<Movie>(blogs, page ?? 1, 25);
 
             return View(pblogs);
@@ -75,6 +83,8 @@ namespace BtVideo.Areas.Admin.Controllers
 
                 blogService.SaveBlogTags(blog, blogTags);
 
+                IndexManager.bookIndex.Add(blog);
+
                 return RedirectToAction("Edit", new { id = blog.MovieID });
             }
             else
@@ -122,6 +132,8 @@ namespace BtVideo.Areas.Admin.Controllers
 
                 blogService.SaveBlogTags(blog, blogTags);
 
+                IndexManager.bookIndex.Mod(blog);
+
                 return RedirectToAction("Index");
             }
             else
@@ -134,6 +146,8 @@ namespace BtVideo.Areas.Admin.Controllers
         public ActionResult Delete(int id)
         {
             blogService.DeleteBlog(id);
+
+            IndexManager.bookIndex.Del(id);
 
             return RedirectToAction("Index");
         }

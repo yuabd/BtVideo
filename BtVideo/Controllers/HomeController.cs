@@ -21,17 +21,14 @@ namespace BtVideo.Controllers
         {
             var blogs = bs.GetBlogs().Where(m => m.IsPublic == true);
             
-            //ViewBag.Count = blogs.Select(m => m.MovieID).Count();
+            var pBlogs = new Paginated<Movie>(blogs, page ?? 1, 24);
 
-            var pBlogs = new Paginated<Movie>(blogs.ToList(), page ?? 1, 24);
+            //var popularTags = (from p in bs.GetTags()
+            //                   group p by new { p.Tag } into t
+            //                   orderby t.Count() descending
+            //                   select new Anonymous { Tag = t.Key.Tag, Num = t.Count() }).Take(10).ToList();
 
-
-            var popularTags = (from p in bs.GetTags()
-                               group p by new { p.Tag } into t
-                               orderby t.Count() descending
-                               select new Anonymous { Tag = t.Key.Tag, Num = t.Count() }).Take(10).ToList();
-
-            var model = new BlogsViewModel(pBlogs, null, popularTags, null);
+            var model = new BlogsViewModel(pBlogs, null, null, null);
             ViewBag.PageTitle = "很好记bt";
 
             return View("~/Views/Movie/Index.cshtml", model);

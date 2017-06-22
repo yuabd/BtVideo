@@ -2,7 +2,7 @@
 
 <html>
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" /> 
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>@ViewBag.Title | 最新720P、1080P高清电影种子下载网站 | 很好记bt | bt.henhaoji.com.cn </title>
 
@@ -37,15 +37,17 @@
                     </div>
 
                     <div id="slidemenu">
-                        <form class="navbar-form navbar-right visible-xs" role="form" action="/list">
+                        <form class="navbar-form navbar-right visible-xs" role="form" action="/search">
                             <div class="form-group">
-                                <input id="search-mobile" class="form-control" type="text" value="" title="Search" placeholder="Search" name="keywords" maxlength="30">
+                                <input id="search-mobile" class="form-control searchKey" type="text" value=""
+                                       title="Search" placeholder="输入关键字" name="k" maxlength="30">
                             </div>
-                            <button class="btn btn-success" type="submit"><i class="fa fa-search"></i> 搜 索</button>
+                            <button class="btn btn-success btn-search" type="submit"><i class="fa fa-search"></i> 搜 索</button>
                         </form>
-                        <form action="/list" class="navbar-form navbar-right hidden-xs" method="get" role="search">
+                        <form action="/search" class="navbar-form navbar-right hidden-xs" method="get" role="search">
                             <div class="form-group disp-flex">
-                                <input class="form-control" id="search" maxlength="30" name="keywords" placeholder="Search" title="Search" type="text" value="" />
+                                <input class="form-control searchKey" id="search" maxlength="30"
+                                       name="k" placeholder="输入关键字" title="Search" type="text" value="" />
 
                                 <button type="submit" class="btn-search">
                                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
@@ -72,14 +74,14 @@
                                 </a>
                             </li>
                             @*@foreach (var item in new BtVideo.Services.BlogService().GetBlogCategories().ToList())
-                            {
-                                <li>
-                                    <a href="/list@(item.CategoryID)" title="@item.CategoryName" class="animate">
-                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                        @item.CategoryName
-                                    </a>
-                                </li>
-                            }*@
+                                {
+                                    <li>
+                                        <a href="/list@(item.CategoryID)" title="@item.CategoryName" class="animate">
+                                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                            @item.CategoryName
+                                        </a>
+                                    </li>
+                                }*@
                             <li>
                                 <a href="/about" class="animate">
                                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
@@ -114,7 +116,7 @@
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", false)
 
-    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"6","bdPos":"left","bdTop":"200.5"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+    <script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "slide": { "type": "slide", "bdImg": "6", "bdPos": "left", "bdTop": "200.5" } }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
     <script>
         var _hmt = _hmt || [];
         (function () {

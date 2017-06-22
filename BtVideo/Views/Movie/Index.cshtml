@@ -103,7 +103,7 @@ else
                                 <a href="/@item.MovieID" title="@item.MovieTitle">
                                     <h5 class="cut">@(item.MovieTitle)</h5>
                                     <p>
-                                        <span>
+                                        @*<span>
                                             <i class="glyphicon glyphicon-eye-open"></i>
                                             @item.PageVisits
                                         </span>
@@ -111,8 +111,8 @@ else
                                             <i class="glyphicon glyphicon-thumbs-up">
                                             </i>
                                             @item.LikeCount
-                                        </span>
-                                        <span>
+                                        </span>*@
+                                        <span class="pull-right">
                                             <i class="glyphicon glyphicon-star"></i>
                                             @item.Grade.ToString("0.0")
                                         </span>

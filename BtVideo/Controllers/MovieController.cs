@@ -8,6 +8,7 @@ using BtVideo.Helpers;
 using System.IO;
 using System;
 using System.Web;
+using System.Collections.Generic;
 
 namespace BtVideo.Controllers
 {
@@ -19,23 +20,9 @@ namespace BtVideo.Controllers
         // GET: V
         [Route("~/list")]
         [Route("~/list{id:int}")]
-        public ActionResult Index(int? id, int? page, string keywords)
+        public ActionResult Index(int? id, int? page)
         {
             var blogs = bs.GetBlogs().Where(m => m.IsPublic == true);
-
-            if (!string.IsNullOrEmpty(keywords))
-            {
-                var key = keywords.Split(' ');
-                foreach (var item in key)
-                {
-                    sites.SaveKeyword(item.Trim());
-
-                    blogs = (from l in blogs
-                             where l.MovieTitle.Contains(item) 
-                             || l.Stars.Contains(item) || l.Director.Contains(item)
-                             select l);
-                }
-            }
 
             //根据分类搜索
             if (id.HasValue)
@@ -45,14 +32,10 @@ namespace BtVideo.Controllers
                          select l);
             }
 
-            var pBlogs = new Paginated<Movie>(blogs.ToList(), page ?? 1, 24);
+            var pBlogs = new Paginated<Movie>(blogs, page ?? 1, 24);
 
             var model = new BlogsViewModel(pBlogs, null, null, null);
-            if (!string.IsNullOrEmpty(keywords))
-            {
-                ViewBag.PageTitle = keywords;
-            }
-            else if (id.HasValue)
+            if (id.HasValue)
             {
                 ViewBag.Category = bs.GetBlogCategory(id.Value);
                 ViewBag.PageTitle = "最新" + ViewBag.Category.CategoryName;
@@ -66,7 +49,6 @@ namespace BtVideo.Controllers
                 ViewBag.PageTitle = "所有影片";
             }
 
-            //ViewBag.PageTitle = string.IsNullOrEmpty(keywords) ? "所有影片" : "搜索结果: " + keywords;
             if (page.HasValue)
             {
                 ViewBag.PageTitle += "_第" + page + "页";
@@ -105,15 +87,15 @@ namespace BtVideo.Controllers
         {
             var blogs = bs.GetBlogsByTag(id).Where(m => m.IsPublic == true);
 
-            ViewBag.Count = blogs.Select(m => m.MovieID).Count();
+            //ViewBag.Count = blogs.Select(m => m.MovieID).Count();
 
-            var pBlogs = new Paginated<Movie>(blogs, page ?? 1, 8);
+            var pBlogs = new Paginated<Movie>(blogs, page ?? 1, 24);
 
             //var categories = bs.GetBlogCategories().ToList();
-            var popularTags = bs.GetPopularTags().Take(10).ToList();
+            //var popularTags = bs.GetPopularTags().Take(10).ToList();
             //var archives = bs.GetArchives().ToList();
 
-            var model = new BlogsViewModel(pBlogs, null, popularTags, null);
+            var model = new BlogsViewModel(pBlogs, null, null, null);
 
             ViewBag.PageTitle = "标签: " + id;
             ViewBag.Blog = "current";
@@ -126,18 +108,48 @@ namespace BtVideo.Controllers
         {
             var blogs = bs.GetBlogs().Where(m => m.Stars.Contains(id));
 
-            ViewBag.Count = blogs.Select(m => m.MovieID).Count();
+            //ViewBag.Count = blogs.Select(m => m.MovieID).Count();
 
-            var pBlogs = new Paginated<Movie>(blogs, page ?? 1, 8);
+            var pBlogs = new Paginated<Movie>(blogs, page ?? 1, 24);
 
-            var popularTags = bs.GetPopularTags().Take(10).ToList();
+            //var popularTags = bs.GetPopularTags().Take(10).ToList();
 
-            var model = new BlogsViewModel(pBlogs, null, popularTags, null);
+            var model = new BlogsViewModel(pBlogs, null, null, null);
 
             ViewBag.PageTitle = "明星: " + id;
             ViewBag.Blog = "current";
 
             return View("Index", model);
+        }
+
+        [Route("~/search")]
+        public ActionResult Search(int? page, string k)
+        {
+            //var blogs = bs.GetBlogs().Where(m => m.IsPublic == true).ToList();
+            
+            //foreach (var item in blogs)
+            //{
+            //    IndexManager.bookIndex.Add(item);
+            //}
+
+            IEnumerable<Movie> list = null;
+
+            if (!string.IsNullOrEmpty(k))
+            {
+                var search = new SearchHelper();
+                list = search.Search(k, page);
+
+                ViewBag.PageTitle = k;
+            }
+
+            var pBlogs = new Paginated<Movie>(list.AsQueryable(), page ?? 1, 24, );
+            var model = new BlogsViewModel(pBlogs, null, null, null);
+            if (page.HasValue)
+            {
+                ViewBag.PageTitle += "_第" + page + "页";
+            }
+
+            return View("~/Views/Movie/Index.cshtml", model);
         }
 
         public ActionResult Captcha()

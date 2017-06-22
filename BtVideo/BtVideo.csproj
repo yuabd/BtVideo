@@ -53,10 +53,25 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PanGu, Version=2.3.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PanGu.Segment.0.0.3\lib\PanGu.dll</HintPath>
+    </Reference>
+    <Reference Include="PanGu.HighLight, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PanGu.Segment.0.0.3\lib\PanGu.HighLight.dll</HintPath>
+    </Reference>
+    <Reference Include="PanGu.Lucene.Analyzer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PanGu.Lucene.Analyzer.0.0.2\lib\PanGu.Lucene.Analyzer.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web.DynamicData" />
@@ -167,6 +182,24 @@
     <Content Include="Content\Images\8f6761a0d4edebad.jpg" />
     <Content Include="Content\Pictures\Blog\201706\5-5.jpg" />
     <Content Include="Content\Pictures\Blog\Source\201706\5-5.jpg" />
+    <Content Include="Dict\ChsDoubleName1.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Dict\ChsDoubleName2.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Dict\ChsSingleName.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Dict\Stopword.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Dict\Synonym.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Dict\Wildcard.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Global.asax" />
     <Content Include="Plugins\xheditor\xheditor-1.1.14-zh-cn.min.js" />
     <Content Include="Plugins\xheditor\xheditor_emot\default\angry.gif" />
@@ -371,6 +404,7 @@
     <Compile Include="Helpers\GlobalHelper.cs" />
     <Compile Include="Helpers\HttpErrorModule.cs" />
     <Compile Include="Helpers\LogHelper.cs" />
+    <Compile Include="Helpers\SearchHelper.cs" />
     <Compile Include="Helpers\Utilities.cs" />
     <Compile Include="Migrations\201706041100220_InitialCreate.cs" />
     <Compile Include="Migrations\201706041100220_InitialCreate.Designer.cs">
@@ -472,6 +506,7 @@
     <Compile Include="Models\Site\ContentViewModel.cs" />
     <Compile Include="Models\Site\LoginViewModel.cs" />
     <Compile Include="Models\MovieStar.cs" />
+    <Compile Include="Models\Site\MovieViewModel.cs" />
     <Compile Include="Models\Site\StarType.cs" />
     <Compile Include="Models\SpiderTask.cs" />
     <Compile Include="Models\User.cs" />
@@ -534,6 +569,9 @@
     <Content Include="Areas\Admin\Views\Blog\AddMovieLink.cshtml" />
     <Content Include="Areas\Admin\Views\Blog\UpdateMovieLink.cshtml" />
     <Content Include="Content\Bt\4\4-【BluRay 720p】深夜食堂电影版2・深夜食堂 .2016.4.38GBBT种子下载.torrent" />
+    <Content Include="Dict\Dict.dct">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Movie\GetApprovedCommentOfPost.cshtml" />

@@ -1,3 +1,10 @@
+G:\github\Bt\BtVideo\BtVideo\bin\Dict\ChsDoubleName1.txt
+G:\github\Bt\BtVideo\BtVideo\bin\Dict\ChsDoubleName2.txt
+G:\github\Bt\BtVideo\BtVideo\bin\Dict\ChsSingleName.txt
+G:\github\Bt\BtVideo\BtVideo\bin\Dict\Stopword.txt
+G:\github\Bt\BtVideo\BtVideo\bin\Dict\Synonym.txt
+G:\github\Bt\BtVideo\BtVideo\bin\Dict\Wildcard.txt
+G:\github\Bt\BtVideo\BtVideo\bin\Dict\Dict.dct
 G:\github\Bt\BtVideo\BtVideo\bin\roslyn\csc.exe
 G:\github\Bt\BtVideo\BtVideo\bin\roslyn\csc.exe.config
 G:\github\Bt\BtVideo\BtVideo\bin\roslyn\csc.rsp
@@ -30,9 +37,14 @@ G:\github\Bt\BtVideo\BtVideo\bin\BtVideo.pdb
 G:\github\Bt\BtVideo\BtVideo\bin\Antlr3.Runtime.dll
 G:\github\Bt\BtVideo\BtVideo\bin\EntityFramework.dll
 G:\github\Bt\BtVideo\BtVideo\bin\EntityFramework.SqlServer.dll
+G:\github\Bt\BtVideo\BtVideo\bin\ICSharpCode.SharpZipLib.dll
+G:\github\Bt\BtVideo\BtVideo\bin\Lucene.Net.dll
 G:\github\Bt\BtVideo\BtVideo\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 G:\github\Bt\BtVideo\BtVideo\bin\Microsoft.Web.Infrastructure.dll
 G:\github\Bt\BtVideo\BtVideo\bin\Newtonsoft.Json.dll
+G:\github\Bt\BtVideo\BtVideo\bin\PanGu.dll
+G:\github\Bt\BtVideo\BtVideo\bin\PanGu.HighLight.dll
+G:\github\Bt\BtVideo\BtVideo\bin\PanGu.Lucene.Analyzer.dll
 G:\github\Bt\BtVideo\BtVideo\bin\System.Net.Http.Formatting.dll
 G:\github\Bt\BtVideo\BtVideo\bin\System.Web.Helpers.dll
 G:\github\Bt\BtVideo\BtVideo\bin\System.Web.Http.dll
@@ -47,7 +59,11 @@ G:\github\Bt\BtVideo\BtVideo\bin\WebGrease.dll
 G:\github\Bt\BtVideo\BtVideo\bin\Antlr3.Runtime.pdb
 G:\github\Bt\BtVideo\BtVideo\bin\EntityFramework.xml
 G:\github\Bt\BtVideo\BtVideo\bin\EntityFramework.SqlServer.xml
+G:\github\Bt\BtVideo\BtVideo\bin\Lucene.Net.pdb
+G:\github\Bt\BtVideo\BtVideo\bin\Lucene.Net.xml
 G:\github\Bt\BtVideo\BtVideo\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+G:\github\Bt\BtVideo\BtVideo\bin\PanGu.pdb
+G:\github\Bt\BtVideo\BtVideo\bin\PanGu.HighLight.pdb
 G:\github\Bt\BtVideo\BtVideo\bin\System.Web.Optimization.xml
 G:\github\Bt\BtVideo\BtVideo\bin\System.Web.Razor.xml
 G:\github\Bt\BtVideo\BtVideo\bin\System.Web.Webpages.xml
