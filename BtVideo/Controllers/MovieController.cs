@@ -125,24 +125,21 @@ namespace BtVideo.Controllers
         [Route("~/search")]
         public ActionResult Search(int? page, string k)
         {
-            //var blogs = bs.GetBlogs().Where(m => m.IsPublic == true).ToList();
-            
-            //foreach (var item in blogs)
-            //{
-            //    IndexManager.bookIndex.Add(item);
-            //}
-
             IEnumerable<Movie> list = null;
-
+            int total = 0;
+            string word = "";
             if (!string.IsNullOrEmpty(k))
             {
                 var search = new SearchHelper();
-                list = search.Search(k, page);
 
-                ViewBag.PageTitle = k;
+                list = search.Search(k, page, out total, out word);
+
+                ViewBag.PageTitle = word;
+
+                sites.SaveKeyword(k);
             }
-
-            var pBlogs = new Paginated<Movie>(list.AsQueryable(), page ?? 1, 24, );
+            
+            var pBlogs = new Paginated<Movie>(list.AsQueryable(), page ?? 1, 24, total);
             var model = new BlogsViewModel(pBlogs, null, null, null);
             if (page.HasValue)
             {

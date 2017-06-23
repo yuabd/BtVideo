@@ -111,52 +111,38 @@ namespace BtVideo.Helpers
             }
             IndexWriter writer = new IndexWriter(directory, new PanGuAnalyzer(), !isExist, IndexWriter.MaxFieldLength.UNLIMITED);
 
-            while (bookQueue.Count > 0)
+            if (bookQueue.Count > 0)
             {
-                Document document = new Document();
-                MovieViewModel book = bookQueue.Dequeue();
-                if (book.IT == IndexType.Insert)
+                for (int i = 0; i < 5; i++)
                 {
-                    document.Add(new Field("id", book.MovieID.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
-                    document.Add(new Field("title", book.MovieTitle, Field.Store.YES, Field.Index.ANALYZED,
-                                           Field.TermVector.WITH_POSITIONS_OFFSETS));
-                    document.Add(new Field("content", book.MovieContent, Field.Store.YES, Field.Index.ANALYZED,
-                                           Field.TermVector.WITH_POSITIONS_OFFSETS));
-                    document.Add(new Field("stars", book.Stars, Field.Store.YES, Field.Index.ANALYZED,
-                                           Field.TermVector.WITH_POSITIONS_OFFSETS));
-                    document.Add(new Field("director", book.Director, Field.Store.YES, Field.Index.ANALYZED,
-                                           Field.TermVector.WITH_POSITIONS_OFFSETS));
-                    document.Add(new Field("picfile", book.PictureFile, Field.Store.YES, Field.Index.ANALYZED,
-                                           Field.TermVector.WITH_POSITIONS_OFFSETS));
-                    document.Add(new Field("grade", book.Grade.ToString(), Field.Store.YES, Field.Index.ANALYZED,
-                                           Field.TermVector.WITH_POSITIONS_OFFSETS));
+                    Document document = new Document();
+                    MovieViewModel book = bookQueue.Dequeue();
 
-                    writer.AddDocument(document);
-                }
-                else if (book.IT == IndexType.Delete)
-                {
-                    writer.DeleteDocuments(new Term("id", book.MovieID.ToString()));
-                }
-                else if (book.IT == IndexType.Modify)
-                {
-                    //先删除 再新增
-                    writer.DeleteDocuments(new Term("id", book.MovieID.ToString()));
+                    if (book.IT == IndexType.Delete)
+                    {
+                        writer.DeleteDocuments(new Term("id", book.MovieID.ToString()));
+                    }
+                    else if (book.IT == IndexType.Modify || book.IT == IndexType.Insert)
+                    {
+                        //先删除 再新增
+                        writer.DeleteDocuments(new Term("id", book.MovieID.ToString()));
 
-                    document.Add(new Field("id", book.MovieID.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
-                    document.Add(new Field("title", book.MovieTitle, Field.Store.YES, Field.Index.ANALYZED,
-                                           Field.TermVector.WITH_POSITIONS_OFFSETS));
-                    document.Add(new Field("content", book.MovieContent, Field.Store.YES, Field.Index.ANALYZED,
-                                           Field.TermVector.WITH_POSITIONS_OFFSETS));
-                    document.Add(new Field("stars", book.Stars, Field.Store.YES, Field.Index.ANALYZED,
-                                           Field.TermVector.WITH_POSITIONS_OFFSETS));
-                    document.Add(new Field("director", book.Director, Field.Store.YES, Field.Index.ANALYZED,
-                                           Field.TermVector.WITH_POSITIONS_OFFSETS));
-                    document.Add(new Field("picfile", book.PictureFile, Field.Store.YES, Field.Index.ANALYZED,
-                                           Field.TermVector.WITH_POSITIONS_OFFSETS));
-                    document.Add(new Field("grade", book.Grade.ToString(), Field.Store.YES, Field.Index.ANALYZED,
-                                           Field.TermVector.WITH_POSITIONS_OFFSETS));
+                        document.Add(new Field("id", book.MovieID.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+                        document.Add(new Field("title", book.MovieTitle, Field.Store.YES, Field.Index.ANALYZED,
+                                               Field.TermVector.WITH_POSITIONS_OFFSETS));
+                        document.Add(new Field("content", book.MovieContent, Field.Store.YES, Field.Index.ANALYZED,
+                                               Field.TermVector.WITH_POSITIONS_OFFSETS));
+                        document.Add(new Field("stars", book.Stars, Field.Store.YES, Field.Index.NO,
+                                               Field.TermVector.WITH_POSITIONS_OFFSETS));
+                        document.Add(new Field("director", book.Director ?? "", Field.Store.YES, Field.Index.ANALYZED,
+                                               Field.TermVector.WITH_POSITIONS_OFFSETS));
+                        document.Add(new Field("picfile", book.PictureFile, Field.Store.YES, Field.Index.NO,
+                                               Field.TermVector.WITH_POSITIONS_OFFSETS));
+                        document.Add(new Field("grade", book.Grade.ToString(), Field.Store.YES, Field.Index.NO,
+                                               Field.TermVector.WITH_POSITIONS_OFFSETS));
 
-                    writer.AddDocument(document);
+                        writer.AddDocument(document);
+                    }
                 }
             }
             writer.Close();
@@ -167,7 +153,7 @@ namespace BtVideo.Helpers
     public class SearchHelper
     {
 
-        public IEnumerable<Movie> Search(string keywords, int? page, out int count)
+        public IEnumerable<Movie> Search(string keywords, int? page, out int count, out string words)
         {
             string indexPath = HttpContext.Current.Server.MapPath("~/IndexData");
             FSDirectory directory = FSDirectory.Open(new DirectoryInfo(indexPath), new NoLockFactory());
@@ -184,22 +170,24 @@ namespace BtVideo.Helpers
             //关键词Or关系设置
             BooleanQuery queryOr = new BooleanQuery();
             TermQuery query = null;
+            words = "";
             foreach (string word in SplitWords(keywords))
             {
-                query = new TermQuery(new Term("content", word));
-                queryOr.Add(query, Occur.SHOULD);//这里设置 条件为Or关系
+                words += word + ",";
                 query = new TermQuery(new Term("title", word));
                 queryOr.Add(query, Occur.SHOULD);//这里设置 条件为Or关系
             }
             //--------------------------------------
-            TopScoreDocCollector collector = TopScoreDocCollector.Create(1000, true);
-            //searcher.Search(query, null, collector);
+            SortField[] sortfield = new SortField[] { SortField.FIELD_SCORE, new SortField(null, SortField.DOC, true) };
+            Sort sort = new Sort(sortfield);
+            TopFieldCollector collector = TopFieldCollector.Create(sort, 1000, false, false, false, false);
+
             searcher.Search(queryOr, null, collector);
 
-            int start = 0, end = 24;
-            page = page ?? 1;
-            
-            ScoreDoc[] docs = collector.TopDocs(start * page.Value, end).ScoreDocs;//取前十条数据  可以通过它实现LuceneNet搜索结果分页
+            int start = 0, pagesize = 24;
+            start = (page ?? 1) - 1;
+            count = collector.TotalHits;
+            ScoreDoc[] docs = collector.TopDocs(start * 24, pagesize).ScoreDocs;//取前十条数据  可以通过它实现LuceneNet搜索结果分页
 
             List<Movie> bookResult = new List<Movie>();
             for (int i = 0; i < docs.Length; i++)
@@ -208,8 +196,8 @@ namespace BtVideo.Helpers
                 Document doc = searcher.Doc(docId);
 
                 Movie book = new Movie();
-                book.MovieTitle = doc.Get("title");
-                book.MovieContent = HightLight(keywords, doc.Get("content"));
+                book.MovieTitle = HightLight(keywords, doc.Get("title"));
+                book.MovieContent = doc.Get("content");
                 book.MovieID = Convert.ToInt32(doc.Get("id"));
                 book.Stars = doc.Get("stars");
                 book.Director = doc.Get("director");

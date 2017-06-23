@@ -23,11 +23,6 @@ namespace BtVideo.Controllers
             
             var pBlogs = new Paginated<Movie>(blogs, page ?? 1, 24);
 
-            //var popularTags = (from p in bs.GetTags()
-            //                   group p by new { p.Tag } into t
-            //                   orderby t.Count() descending
-            //                   select new Anonymous { Tag = t.Key.Tag, Num = t.Count() }).Take(10).ToList();
-
             var model = new BlogsViewModel(pBlogs, null, null, null);
             ViewBag.PageTitle = "很好记bt";
 
