@@ -74,7 +74,7 @@
                 <div class="toptags-list">
                     @foreach (var item in ss.GetKeywords().OrderByDescending(m => m.Count).Take(10).ToList())
                     {
-                        <a href="/list?keywords=@(item.Keyword)" title="@item.Keyword">@item.Keyword</a>
+                        <a href="/search?k=@(item.Keyword)" title="@item.Keyword">@item.Keyword</a>
                     }
                 </div>
             </div>

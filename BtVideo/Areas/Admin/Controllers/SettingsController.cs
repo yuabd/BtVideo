@@ -1,5 +1,7 @@
-﻿using BtVideo.Models;
+﻿using BtVideo.Helpers;
+using BtVideo.Models;
 using BtVideo.Models.Others;
+using BtVideo.Models.Site;
 using BtVideo.Services;
 using System;
 using System.Collections.Generic;
@@ -10,10 +12,11 @@ using System.Xml.Linq;
 
 namespace BtVideo.Areas.Admin.Controllers
 {
-	[Authorize(Roles="Administrator")]
+    [Authorize(Roles = "Administrator")]
     public class SettingsController : Controller
     {
-		private MembershipService membershipService = new MembershipService();
+        private MembershipService membershipService = new MembershipService();
+        private BlogService bs = new BlogService();
         //
         // GET: /Admin/Settings/
 
@@ -22,153 +25,179 @@ namespace BtVideo.Areas.Admin.Controllers
             return View();
         }
 
-		public ActionResult Company()
-		{
-			SiteSettings siteSettings = new SiteSettings();
-			return View(siteSettings);
-		}
+        public ActionResult GenSearch()
+        {
+            var blogs = (from l in bs.GetBlogs()
+                         select new MovieViewModel()
+                         {
+                             MovieID = l.MovieID,
+                             MovieTitle = l.MovieTitle,
+                             MovieContent = l.MovieContent,
+                             Stars = l.Stars,
+                             Director = l.Director,
+                             PictureFile = l.PictureFile,
+                             Grade = l.Grade,
+                             IT = IndexType.Insert,
+                             PageVisits = l.PageVisits,
+                             LikeCount = l.LikeCount
+                         }).ToList();
 
-		[HttpPost]
-		public ActionResult Company(SiteSettings siteSettings)
-		{
-			var xml = XDocument.Load(Server.MapPath("~/SiteSettings.xml"));
-			XAttribute field;
+            foreach (var item in blogs)
+            {
+                IndexManager.bookIndex.Add(item);
+            }
 
-			field = (from m in xml.Descendants("companyName") select m.Attribute("value")).SingleOrDefault();
-			field.SetValue(siteSettings.CompanyName);
-			field = (from m in xml.Descendants("companyWebsite") select m.Attribute("value")).SingleOrDefault();
-			field.SetValue(siteSettings.CompanyWebsite);
-			field = (from m in xml.Descendants("icp") select m.Attribute("value")).SingleOrDefault();
-			field.SetValue(siteSettings.ICP != null ? siteSettings.ICP : "");
-			field = (from m in xml.Descendants("title") select m.Attribute("value")).SingleOrDefault();
-			field.SetValue(siteSettings.Title != null ? siteSettings.Title : "");
-			field = (from m in xml.Descendants("keywords") select m.Attribute("value")).SingleOrDefault();
-			field.SetValue(siteSettings.Keywords != null ? siteSettings.Keywords : "");
-			field = (from m in xml.Descendants("description") select m.Attribute("value")).SingleOrDefault();
-			field.SetValue(siteSettings.Description != null ? siteSettings.Description : "");
 
-			xml.Save(Server.MapPath("~/SiteSettings.xml"));
-			return View(siteSettings);
-		}
+            return View();
+        }
 
-		[HttpPost]
-		public ActionResult SiteSettings(SiteSettings siteSettings)
-		{
-			var xml = XDocument.Load(Server.MapPath("~/SiteSettings.xml"));
-			XAttribute field;
-			field = (from m in xml.Descendants("address") select m.Attribute("value")).SingleOrDefault();
-			field.SetValue(siteSettings.Address != null ? siteSettings.Address : "");
-			field = (from m in xml.Descendants("qq") select m.Attribute("value")).SingleOrDefault();
-			field.SetValue(siteSettings.QQ != null ? siteSettings.QQ : "");
-			field = (from m in xml.Descendants("companyEmail") select m.Attribute("value")).SingleOrDefault();
-			field.SetValue(siteSettings.CompanyEmail);
-			field = (from m in xml.Descendants("companyEmailAuto") select m.Attribute("value")).SingleOrDefault();
-			field.SetValue(siteSettings.CompanyEmailAuto);
-			field = (from m in xml.Descendants("companyPhoneNo") select m.Attribute("value")).SingleOrDefault();
-			field.SetValue(siteSettings.CompanyPhoneNo);
-			
-			xml.Save(Server.MapPath("~/SiteSettings.xml"));
-			return View("Company", siteSettings);
-		}
+        public ActionResult Company()
+        {
+            SiteSettings siteSettings = new SiteSettings();
+            return View(siteSettings);
+        }
 
-		public ActionResult Users()
-		{
-			var users = membershipService.GetUsers();
-			return View(users);
-		}
+        [HttpPost]
+        public ActionResult Company(SiteSettings siteSettings)
+        {
+            var xml = XDocument.Load(Server.MapPath("~/SiteSettings.xml"));
+            XAttribute field;
 
-		[HttpPost]
-		public ActionResult Users(User user, int _userID, string[] userRole)
-		{
-			if (_userID == 0)
-				membershipService.InsertUser(user,userRole);
-			else
-			{
-				user.UserID = _userID;
-				membershipService.UpdateUser(user,userRole);
-			}
+            field = (from m in xml.Descendants("companyName") select m.Attribute("value")).SingleOrDefault();
+            field.SetValue(siteSettings.CompanyName);
+            field = (from m in xml.Descendants("companyWebsite") select m.Attribute("value")).SingleOrDefault();
+            field.SetValue(siteSettings.CompanyWebsite);
+            field = (from m in xml.Descendants("icp") select m.Attribute("value")).SingleOrDefault();
+            field.SetValue(siteSettings.ICP != null ? siteSettings.ICP : "");
+            field = (from m in xml.Descendants("title") select m.Attribute("value")).SingleOrDefault();
+            field.SetValue(siteSettings.Title != null ? siteSettings.Title : "");
+            field = (from m in xml.Descendants("keywords") select m.Attribute("value")).SingleOrDefault();
+            field.SetValue(siteSettings.Keywords != null ? siteSettings.Keywords : "");
+            field = (from m in xml.Descendants("description") select m.Attribute("value")).SingleOrDefault();
+            field.SetValue(siteSettings.Description != null ? siteSettings.Description : "");
 
-			membershipService.Save();
-			return RedirectToAction("Users");
-		}
+            xml.Save(Server.MapPath("~/SiteSettings.xml"));
+            return View(siteSettings);
+        }
 
-		public JsonResult GetUserRoles(int id)
-		{
-			string[] rolelist = membershipService.GetUserRoles(id).Split(',');
+        [HttpPost]
+        public ActionResult SiteSettings(SiteSettings siteSettings)
+        {
+            var xml = XDocument.Load(Server.MapPath("~/SiteSettings.xml"));
+            XAttribute field;
+            field = (from m in xml.Descendants("address") select m.Attribute("value")).SingleOrDefault();
+            field.SetValue(siteSettings.Address != null ? siteSettings.Address : "");
+            field = (from m in xml.Descendants("qq") select m.Attribute("value")).SingleOrDefault();
+            field.SetValue(siteSettings.QQ != null ? siteSettings.QQ : "");
+            field = (from m in xml.Descendants("companyEmail") select m.Attribute("value")).SingleOrDefault();
+            field.SetValue(siteSettings.CompanyEmail);
+            field = (from m in xml.Descendants("companyEmailAuto") select m.Attribute("value")).SingleOrDefault();
+            field.SetValue(siteSettings.CompanyEmailAuto);
+            field = (from m in xml.Descendants("companyPhoneNo") select m.Attribute("value")).SingleOrDefault();
+            field.SetValue(siteSettings.CompanyPhoneNo);
 
-			return Json(rolelist, JsonRequestBehavior.AllowGet);
-		}
+            xml.Save(Server.MapPath("~/SiteSettings.xml"));
+            return View("Company", siteSettings);
+        }
 
-		public JsonResult CheckUser(int userID)
-		{
-			var role = membershipService.GetUser(userID);
-			return Json(role == null, JsonRequestBehavior.AllowGet);
-		}
+        public ActionResult Users()
+        {
+            var users = membershipService.GetUsers();
+            return View(users);
+        }
 
-		public ActionResult DeleteUser(int id)
-		{
-			membershipService.DeleteUser(id);
-			membershipService.Save();
-			return RedirectToAction("Users");
-		}
+        [HttpPost]
+        public ActionResult Users(User user, int _userID, string[] userRole)
+        {
+            if (_userID == 0)
+                membershipService.InsertUser(user, userRole);
+            else
+            {
+                user.UserID = _userID;
+                membershipService.UpdateUser(user, userRole);
+            }
 
-		public ActionResult Roles()
-		{
-			var roles = membershipService.GetUserRoles();
-			return View(roles);
-		}
+            membershipService.Save();
+            return RedirectToAction("Users");
+        }
 
-		[HttpPost]
-		public ActionResult Roles(UserRole userRole, string oldRole)
-		{
-			if (!string.IsNullOrEmpty(userRole.RoleID))
-			{
-				if (string.IsNullOrEmpty(oldRole))
-					membershipService.InsertUserRole(userRole);
-				else
-					membershipService.UpdateUserRole(userRole, oldRole);
+        public JsonResult GetUserRoles(int id)
+        {
+            string[] rolelist = membershipService.GetUserRoles(id).Split(',');
 
-				membershipService.Save();
-			}
+            return Json(rolelist, JsonRequestBehavior.AllowGet);
+        }
 
-			return RedirectToAction("Roles");
-		}
+        public JsonResult CheckUser(int userID)
+        {
+            var role = membershipService.GetUser(userID);
+            return Json(role == null, JsonRequestBehavior.AllowGet);
+        }
 
-		public ActionResult DeleteRole(string id)
-		{
-			membershipService.DeleteUserRole(id);
-			membershipService.Save();
-			return RedirectToAction("Roles");
-		}
+        public ActionResult DeleteUser(int id)
+        {
+            membershipService.DeleteUser(id);
+            membershipService.Save();
+            return RedirectToAction("Users");
+        }
 
-		public JsonResult CheckRole(string roleID)
-		{
-			var role = membershipService.GetUserRole(roleID);
-			return Json(role == null, JsonRequestBehavior.AllowGet);
-		}
+        public ActionResult Roles()
+        {
+            var roles = membershipService.GetUserRoles();
+            return View(roles);
+        }
 
-		public ActionResult Password()
-		{
-			var userID = Convert.ToInt32(User.Identity.Name);
-			var user = membershipService.GetUser(userID);
-			return View(user);
-		}
+        [HttpPost]
+        public ActionResult Roles(UserRole userRole, string oldRole)
+        {
+            if (!string.IsNullOrEmpty(userRole.RoleID))
+            {
+                if (string.IsNullOrEmpty(oldRole))
+                    membershipService.InsertUserRole(userRole);
+                else
+                    membershipService.UpdateUserRole(userRole, oldRole);
 
-		[HttpPost]
-		public ActionResult Password(User user)
-		{
-			if (ModelState.IsValid)
-			{
-				membershipService.ChangePassword(user.UserID, user.Password);
-				membershipService.Save();
+                membershipService.Save();
+            }
 
-				return View(user);
-			}
-			else
-			{
-				return View(user);
-			}
-			
-		}
+            return RedirectToAction("Roles");
+        }
+
+        public ActionResult DeleteRole(string id)
+        {
+            membershipService.DeleteUserRole(id);
+            membershipService.Save();
+            return RedirectToAction("Roles");
+        }
+
+        public JsonResult CheckRole(string roleID)
+        {
+            var role = membershipService.GetUserRole(roleID);
+            return Json(role == null, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Password()
+        {
+            var userID = Convert.ToInt32(User.Identity.Name);
+            var user = membershipService.GetUser(userID);
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult Password(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                membershipService.ChangePassword(user.UserID, user.Password);
+                membershipService.Save();
+
+                return View(user);
+            }
+            else
+            {
+                return View(user);
+            }
+
+        }
     }
 }

@@ -84,7 +84,6 @@ G:\github\Bt\BtVideo\BtVideo\bin\zh-Hans\System.Web.Mvc.resources.dll
 G:\github\Bt\BtVideo\BtVideo\bin\zh-Hans\System.Net.Http.Formatting.resources.dll
 G:\github\Bt\BtVideo\BtVideo\bin\zh-Hans\System.Web.Http.resources.dll
 G:\github\Bt\BtVideo\BtVideo\bin\zh-Hans\System.Web.Http.WebHost.resources.dll
-G:\github\Bt\BtVideo\BtVideo\obj\Release\BtVideo.csprojResolveAssemblyReference.cache
 G:\github\Bt\BtVideo\BtVideo\obj\Release\BtVideo.Migrations.InitialCreate.resources
 G:\github\Bt\BtVideo\BtVideo\obj\Release\BtVideo.Migrations.InitialCreate1.resources
 G:\github\Bt\BtVideo\BtVideo\obj\Release\BtVideo.Migrations.InitialCreate2.resources

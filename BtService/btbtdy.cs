@@ -250,21 +250,28 @@ namespace BtService
                 foreach (Match item in cols)
                 {
                     model.Magnet = item.Groups["magnet"].ToString();
-                    var strCont = client.DownloadString("http://www.btbtdy.com" + item.Groups["url"].ToString());
-
-                    string zj = @"<a class=""className"" href=""(?<url>.*?)"" target=""_blank"">种子①</a>";
-                    r = new Regex(zj, RegexOptions.None);
-                    match = r.Match(strCont);
-
-                    if (match.Success)
+                    try
                     {
-                        model.MovieLinks.Add(new MovieLink()
+                        var strCont = client.DownloadString("http://www.btbtdy.com" + item.Groups["url"].ToString());
+
+                        string zj = @"<a class=""className"" href=""(?<url>.*?)"" target=""_blank"">种子①</a>";
+                        r = new Regex(zj, RegexOptions.None);
+                        match = r.Match(strCont);
+
+                        if (match.Success)
                         {
-                            LinkUrl = match.Groups["url"].ToString(),
-                            LinkName = item.Groups["name"].ToString(),
-                            Magnet = item.Groups["magnet"].ToString(),
-                            DownloadCount = 0
-                        });
+                            model.MovieLinks.Add(new MovieLink()
+                            {
+                                LinkUrl = match.Groups["url"].ToString(),
+                                LinkName = item.Groups["name"].ToString(),
+                                Magnet = item.Groups["magnet"].ToString(),
+                                DownloadCount = 0
+                            });
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        
                     }
                 }
 

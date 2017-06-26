@@ -44,6 +44,12 @@ namespace BtVideo.Helpers
 
             bookQueue.Enqueue(bvm);
         }
+
+        public void Add(MovieViewModel books)
+        {
+            bookQueue.Enqueue(books);
+        }
+
         /// <summary>
         /// 删除Books表信息时 添加删除索引请求至队列
         /// </summary>
@@ -116,6 +122,9 @@ namespace BtVideo.Helpers
                 for (int i = 0; i < 5; i++)
                 {
                     Document document = new Document();
+                    if (bookQueue.Count <= 0)
+                        break;
+
                     MovieViewModel book = bookQueue.Dequeue();
 
                     if (book.IT == IndexType.Delete)
@@ -128,18 +137,23 @@ namespace BtVideo.Helpers
                         writer.DeleteDocuments(new Term("id", book.MovieID.ToString()));
 
                         document.Add(new Field("id", book.MovieID.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+
                         document.Add(new Field("title", book.MovieTitle, Field.Store.YES, Field.Index.ANALYZED,
                                                Field.TermVector.WITH_POSITIONS_OFFSETS));
+
                         document.Add(new Field("content", book.MovieContent, Field.Store.YES, Field.Index.ANALYZED,
                                                Field.TermVector.WITH_POSITIONS_OFFSETS));
+
                         document.Add(new Field("stars", book.Stars, Field.Store.YES, Field.Index.NO,
-                                               Field.TermVector.WITH_POSITIONS_OFFSETS));
+                                               Field.TermVector.NO));
+
                         document.Add(new Field("director", book.Director ?? "", Field.Store.YES, Field.Index.ANALYZED,
                                                Field.TermVector.WITH_POSITIONS_OFFSETS));
                         document.Add(new Field("picfile", book.PictureFile, Field.Store.YES, Field.Index.NO,
-                                               Field.TermVector.WITH_POSITIONS_OFFSETS));
+                                               Field.TermVector.NO));
+
                         document.Add(new Field("grade", book.Grade.ToString(), Field.Store.YES, Field.Index.NO,
-                                               Field.TermVector.WITH_POSITIONS_OFFSETS));
+                                               Field.TermVector.NO));
 
                         writer.AddDocument(document);
                     }
