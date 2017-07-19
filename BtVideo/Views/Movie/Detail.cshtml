@@ -14,8 +14,23 @@
     <script>
         $(function () {
             rator.registerRatingButtons();
-            $("#Captcha").on("click", function () { $(this).attr("src", "/Movie/Captcha"); })
+            $("#Captcha").on("click", function () { $(this).attr("src", "/Movie/Captcha"); });
+
+            $(".cili").on("click", function (event) {
+                //event.preventDefault();
+                //console.info(1)
+                //弹出广告操作
+                //window.open("http://zz1.yxxwyz.com/c.php?s=JnpvbmVpZD04MjMmc2l0ZWlkPTI4NCZ1aWQ9MTI5NiZhZHNpZD0yNDQmcGxhbmlkPTE0JnBsYW50eXBlPWNwYyZ1cmw9aHR0cCUzQSUyRiUyRnp6Mi5jem1jY20uY29tJTJGb2slMkZzJTJGOTklMkY1JTJGaW5kZXguaHRtbCUzRm1pZCUzRDEwJnZ0aW1lPTIwMTctMDctMDMgMTU6NTk6MjEmaXA9NjAuMTgxLjc4LjIyMA==;48fd2898670bac6ff73e03afc960b6cc;&p=aj0wJm09NyZmPTI2LjAuMCZyPWh0dHAlM0ElMkYlMkZidC5oZW5oYW9qaS5jb20uY24lMkYmaz0mdT1odHRwJTNBJTJGJTJGYnQuaGVuaGFvamkuY29tLmNuJTJGMTA3ODImcmVzPTE2MDB4OTAwJnQ9JUU2JTk2JUIwJUU2JTlDJUE4JUU0JUI5JTgzJUU0JUJDJThBJTIwJTdDJTIwJUU2JTlDJTgwJUU2JTk2JUIwNzIwUCVFMyU4MCU4MTEwODBQJUU5JUFCJTk4JUU2JUI4JTg1JUU3JTk0JUI1JUU1JUJEJUIxJUU3JUE3JThEJUU1JUFEJTkwJUU0JUI4JThCJUU4JUJEJUJEJUU3JUJEJTkxJUU3JUFCJTk5JTIwJTdDJTIwJUU1JUJFJTg4JUU1JUE1JUJEJUU4JUFFJUIwYnQlMjAlN0MlMjBidC5oZW5oYW9qaS5jb20uY24mbD1lbi1VUyZjPTEmaD03NzAmc2U9Mg==");//新窗口打开
+                //alert(1);
+                //$(this).unbind();
+                //$(this).on("click", function () {
+                window.open("/download/" + $(this).attr("id"));
+                //});
+            });
         });
+
+
+
     </script>
 }
 <ol class="breadcrumb mt-20">
@@ -149,24 +164,50 @@
                 </p>
             </div>
 
-            @if (!string.IsNullOrWhiteSpace(Model.Blog.Magnet))
-            {
-                <div class="col-md-12">
-                    <h2>磁力链接：</h2>
-                    <input type="text" class="form-control" value="@Model.Blog.Magnet" />
-                </div>
-            }
-
             <div class="col-md-12">
-                <h2>种子：</h2>
+                <h2>磁力：</h2>
+
+                <a data-type="3" data-tmpl="800x90" data-tmplid="195" data-rd="2" data-style="2" data-border="1" href="#"></a>
+                <script type="text/javascript">
+                (function(win,doc){
+                    var s = doc.createElement("script"), h = doc.getElementsByTagName("head")[0];
+                    if (!win.alimamatk_show) {
+                        s.charset = "gbk";
+                        s.async = true;
+                        s.src = "https://alimama.alicdn.com/tkapi.js";
+                        h.insertBefore(s, h.firstChild);
+                    };
+                    var o = {
+                        pid: "mm_43017247_33562094_119334438",/*推广单元ID，用于区分不同的推广渠道*/
+                        appkey: "",/*通过TOP平台申请的appkey，设置后引导成交会关联appkey*/
+                        unid: "",/*自定义统计字段*/
+                        type: "click" /* click 组件的入口标志 （使用click组件必设）*/
+                    };
+                    win.alimamatk_onload = win.alimamatk_onload || [];
+                    win.alimamatk_onload.push(o);
+                })(window,document);
+                </script>
+
+
                 @foreach (var item in Model.Blog.MovieLinks)
                 {
-                    <div class="col-sm-12">
-                        <a href="/download/@item.LinkID"
-                           title="@Model.Blog.MovieTitle" rel="nofollow" target="_blank">@item.LinkName</a>
+                    <div class="col-sm-12 mt-20">
+                        <h5>
+                            @item.LinkName
+                        </h5>
+                        <div class=" col-md-9">
+                            <input type="text" class="form-control" value="@item.Magnet" />
+                        </div>
+                        <div class="col-md-3">
+                            <a href="javascript:void(0)" id="@item.LinkID" class="btn btn-primary cili">
+                                下载种子
+                            </a>
+                        </div>
                     </div>
                 }
             </div>
+
+            @*<script src="http://js.yxxwyz.com/vs_823.js" type="text/javascript"></script>*@
         </section>
         <div class="post-slug-actions clearfix">
             <div class="pull-right">
@@ -179,13 +220,14 @@
             <span class="text-muted none ratemessage">感谢点赞！</span>
         </div>
         <div class="bor visible-xs"></div>
+        
     </article>
     <div class="hidden-print">
         <hr class="hidden-xs">
         <div class="row">
             <div class="col-md-6">
                 <strong>
-                    Newer
+                    Older
                 </strong>
                 <div>
                     @if (Model.PreNextBlog.PreBlog != null)
@@ -202,7 +244,7 @@
 
             <div class="col-md-6">
                 <strong>
-                    Older
+                    Newer
                 </strong>
                 <div>
                     @if (Model.PreNextBlog.NextBlog != null)
@@ -227,7 +269,7 @@
                     <div class="thumbnail">
                         <a href="/@item.MovieID" title="@item.MovieTitle">
                             <div class="movie-img">
-                                <img data-original="http://bt.henhaoji.com.cn/@(item.PictureThumbnail)" 
+                                <img data-original="http://bt.henhaoji.com.cn/@(item.PictureThumbnail)"
                                      alt="@item.MovieTitle" />
                             </div>
                         </a>
@@ -283,11 +325,11 @@
                             </span>
                             <input class="form-control" data-val="true"
                                    data-val-required="Name 字段是必需的。"
-                                   id="BlogComment_CaptchaCode" name="BlogComment.CaptchaCode"
+                                   id="CaptchaCode" name="CaptchaCode"
                                    placeholder="验证码" type="text" value="">
 
                             <span class="field-validation-valid"
-                                  data-valmsg-for="BlogComment.CaptchaCode" data-valmsg-replace="true"></span>
+                                  data-valmsg-for="CaptchaCode" data-valmsg-replace="true"></span>
 
                         </div>
                         @Html.HiddenFor(m => m.BlogComment.MovieID)

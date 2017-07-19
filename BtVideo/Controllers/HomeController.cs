@@ -3,10 +3,7 @@ using BtVideo.Models;
 using BtVideo.Models.Others;
 using BtVideo.Models.Site;
 using BtVideo.Services;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace BtVideo.Controllers
@@ -20,11 +17,16 @@ namespace BtVideo.Controllers
         public ActionResult Index(int? page)
         {
             var blogs = bs.GetBlogs().Where(m => m.IsPublic == true);
-            
+
             var pBlogs = new Paginated<Movie>(blogs, page ?? 1, 24);
 
             var model = new BlogsViewModel(pBlogs, null, null, null);
             ViewBag.PageTitle = "很好记bt";
+
+            if (page.HasValue)
+            {
+                ViewBag.PageTitle += "_第" + page.Value + "页";
+            }
 
             return View("~/Views/Movie/Index.cshtml", model);
         }

@@ -39,7 +39,8 @@ namespace BtVideo.Controllers
             {
                 ViewBag.Category = bs.GetBlogCategory(id.Value);
                 ViewBag.PageTitle = "最新" + ViewBag.Category.CategoryName;
-                if (id != 3 || id != 4 || id != 38)
+                
+                if (id != 3 && id != 4 && id != 38)
                 {
                     ViewBag.PageTitle += "电影电视剧";
                 }
@@ -166,9 +167,23 @@ namespace BtVideo.Controllers
         [HttpPost]
         public ActionResult AddComment(MovieComment blogComment, string CaptchaCode)
         {
-            bs.InsertBlogComment(blogComment);
+            try
+            {
+                if (Session["Captcha"] != null && Session["Captcha"].ToString() == CaptchaCode)
+                {
+                    bs.InsertBlogComment(blogComment);
 
-            return RedirectToAction("GetApprovedCommentOfPost", new { id = blogComment.MovieID });
+                    return Json(new { code = 1 }, JsonRequestBehavior.AllowGet);
+                }
+
+                return Json(new { code = -1 }, JsonRequestBehavior.AllowGet);
+
+                throw new Exception();
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
         }
 
         [Route("~/download/{id}")]

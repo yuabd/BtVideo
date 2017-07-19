@@ -26,7 +26,7 @@ namespace BtVideo.Models.Others
 		public Paginated(IQueryable<T> source, int pageIndex, int pageSize)
 		{
 			PageIndex = pageIndex;
-			TotalRecords = source.Count();
+            TotalRecords = source.Select(m => new { }).Count();
 			PageSize = pageSize;
 
 			TotalPages = (int)Math.Ceiling(TotalRecords / (double)PageSize);

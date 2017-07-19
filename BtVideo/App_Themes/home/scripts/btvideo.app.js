@@ -31,11 +31,9 @@ $(function () {
 });
 
 commentBlowUp = function () { alert("Comment failed.") };
-commentSuccess = function () { $("#form0").slideUp(); $("#thx-for-comment").slideDown() };
-commentComplete = function () {
-    $("#form0")[0].reset(); $("#form0").html("");
-    $(".comment-form-containter").hide()
-};
+commentSuccess = function (e) { if (e.code == 1) { $("#form0").slideUp(); $("#thx-for-comment").slideDown();$("#form0")[0].reset(); $("#form0").html("");
+    $(".comment-form-containter").hide() } else { alert("\u9a8c\u8bc1\u7801\u9519\u8bef\uff01") } };
+commentComplete = function () { };
 rator = {
     registerRatingButtons: function ()
     {

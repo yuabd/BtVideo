@@ -6,14 +6,12 @@
     }
 
     <section class="top-tags">
+        <script src="http://js.yxxwyz.com/vs_823.js" type="text/javascript"></script>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active">
                         <a href="#home" aria-controls="home" role="tab" data-toggle="tab">本周热门</a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#grade" aria-controls="grade" role="tab" data-toggle="tab">最高评分</a>
                     </li>
                     <li role="presentation">
                         <a href="#new" aria-controls="new" role="tab" data-toggle="tab">最新更新</a>
@@ -26,19 +24,6 @@
                     <div role="tabpanel" class="tab-pane active" id="home">
                         <ul class="list-group">
                             @foreach (var item in bs.GetBlogs().OrderByDescending(m => m.PageVisits).Take(10).ToList())
-                            {
-                                <li class="list-group-item">
-                                    <a href="/@item.MovieID" title="@item.MovieTitle">
-                                        <span class="badge">@item.Grade.ToString("0.0")</span>
-                                        @item.MovieTitle
-                                    </a>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="grade">
-                        <ul class="list-group">
-                            @foreach (var item in bs.GetBlogs().OrderByDescending(m => m.Grade).Take(10).ToList())
                             {
                                 <li class="list-group-item">
                                     <a href="/@item.MovieID" title="@item.MovieTitle">
@@ -66,7 +51,21 @@
             </div>
         </div>
     </section>
-
+    <div class="bor"></div>
+    <section class="top-tags">
+        <div class="panel panel-default">
+            <div class="panel-heading">电影类型</div>
+            <div class="panel-body">
+                <div class="toptags-list">
+                    @foreach (var item in bs.GetBlogCategories().Take(20).ToList())
+                    {
+                        <a href="/list@(item.CategoryID)" title="@item.CategoryName">@item.CategoryName</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="bor"></div>
     <section class="top-tags">
         <div class="panel panel-default">
             <div class="panel-heading">热门搜索</div>

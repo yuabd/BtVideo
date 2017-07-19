@@ -107,7 +107,7 @@ namespace BtService
                                 using (MemoryStream ms = new MemoryStream(bytes))
                                 {
                                     ms.Seek(0, SeekOrigin.Begin);
-                                    ms.WriteTo(new FileStream("D:/btmovie/Content/Pictures/Blog/" + blog.PictureFile, FileMode.OpenOrCreate));
+                                    ms.WriteTo(new FileStream("C:/www/btmovie/Content/Pictures/Blog/" + blog.PictureFile, FileMode.OpenOrCreate));
                                 }
 
                                 db.SaveChanges();
