@@ -24,6 +24,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -169,6 +170,7 @@
     <Content Include="App_Themes\home\images\6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg" />
     <Content Include="App_Themes\home\images\account-home-background1.png" />
     <Content Include="App_Themes\home\images\dog-sniffing-ground.png" />
+    <Content Include="App_Themes\home\images\pos.jpg" />
     <Content Include="App_Themes\home\scripts\bootstrap.ediblog.slidemenu.min.js" />
     <Content Include="App_Themes\home\scripts\bootstrap.min.js" />
     <Content Include="App_Themes\home\scripts\btvideo.app.js" />
