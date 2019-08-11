@@ -6,3 +6,9 @@ BtService/bin
 BtService/obj
 BtService.Tests/bin
 BtService.Tests/obj
+*.mdb  
+*.ldb
+*.config
+Debug/  
+Release/  
+obj/  
