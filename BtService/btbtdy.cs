@@ -89,48 +89,54 @@ namespace BtService
                 var title = @"<div class=""vod_intro rt""><h1>(?<title>.*?)<span class=""year"">((?<year>.*?))</span></h1>";
                 Regex r = new Regex(title, RegexOptions.None);
                 Match match = r.Match(base.HtmlCont);
+				Movie movie = null;
 
-                if (match.Success)
+				if (match.Success)
                 {
                     model.MovieTitle = match.Groups["title"].ToString();
                     model.ShowDate = new DateTime(int.Parse(match.Groups["year"].ToString().Trim().Trim('(').Trim(')')), 1, 1, 0, 0, 0);
-                    if (db.Movies.Any(m => m.MovieTitle == model.MovieTitle))
-                    {
-                        Err = true;
-                        return null;
-                    }
+					movie = db.Movies.FirstOrDefault(m => m.MovieTitle == model.MovieTitle);
 
-                    model.MovieTags = new List<MovieTag>();
+					if (movie != null)
+					{
+						model = movie;
+						Err = true;
+					}
 
-                    model.MovieTags.Add(new MovieTag()
-                    {
-                        Tag = model.MovieTitle + "720p"
-                    });
-                    model.MetaKeywords += model.MovieTitle + "720p,";
+					if (model == null)
+					{
+						model.MovieTags = new List<MovieTag>();
 
-                    model.MovieTags.Add(new MovieTag()
-                    {
-                        Tag = model.MovieTitle + "迅雷下载"
-                    });
-                    model.MetaKeywords += model.MovieTitle + "迅雷下载,";
+						model.MovieTags.Add(new MovieTag()
+						{
+							Tag = model.MovieTitle + "720p"
+						});
+						model.MetaKeywords += model.MovieTitle + "720p,";
 
-                    model.MovieTags.Add(new MovieTag()
-                    {
-                        Tag = model.MovieTitle + "磁力链接"
-                    });
-                    model.MetaKeywords += model.MovieTitle + "磁力链接,";
+						model.MovieTags.Add(new MovieTag()
+						{
+							Tag = model.MovieTitle + "迅雷下载"
+						});
+						model.MetaKeywords += model.MovieTitle + "迅雷下载,";
 
-                    model.MovieTags.Add(new MovieTag()
-                    {
-                        Tag = model.MovieTitle + "BT种子下载"
-                    });
-                    model.MetaKeywords += model.MovieTitle + "BT种子下载,";
+						model.MovieTags.Add(new MovieTag()
+						{
+							Tag = model.MovieTitle + "磁力链接"
+						});
+						model.MetaKeywords += model.MovieTitle + "磁力链接,";
 
-                    model.MovieTags.Add(new MovieTag()
-                    {
-                        Tag = model.MovieTitle + "1080p"
-                    });
-                    model.MetaKeywords += model.MovieTitle + "1080p";
+						model.MovieTags.Add(new MovieTag()
+						{
+							Tag = model.MovieTitle + "BT种子下载"
+						});
+						model.MetaKeywords += model.MovieTitle + "BT种子下载,";
+
+						model.MovieTags.Add(new MovieTag()
+						{
+							Tag = model.MovieTitle + "1080p"
+						});
+						model.MetaKeywords += model.MovieTitle + "1080p";
+					}
                 }
 
                 //评分
@@ -144,7 +150,7 @@ namespace BtService
                 //}
 
                 //地区
-                string area = @"<dt>地区：</dt><dd><a href=""/screen/0---(?<area>.*?)--time-1.html"">(?<area>.*?)</a>";
+                string area = @"<dt>地区:</dt><dd><a href=""/screen/0---(?<area>.*?)--time-1.html"">(?<area>.*?)</a>";
                 r = new Regex(area, RegexOptions.None);
                 match = r.Match(base.HtmlCont);
 
@@ -171,7 +177,7 @@ namespace BtService
                 }
 
                 //类型
-                string type = @"<dt>类型：</dt><dd>(?<type>.*?)</dd><dt>地区";
+                string type = @"<dt>类型:</dt><dd>(?<type>.*?)</dd><dt>地区";
                 r = new Regex(type, RegexOptions.None);
                 match = r.Match(base.HtmlCont);
                 MatchCollection cols = null;
@@ -182,11 +188,17 @@ namespace BtService
                     type = @"<a(?<url>.*?)>(?<type1>.*?)</a>";
                     cols = Regex.Matches(value, type);
 
+					if(movie != null)
+					{
+						var cateJoins = db.MovieCategoryJoins.Where(m => m.MovieID == movie.MovieID).ToList();
+						db.MovieCategoryJoins.RemoveRange(cateJoins);
+					}
+
                     model.MovieCategoryJoins = new List<MovieCategoryJoin>();
                     foreach (Match item in cols)
                     {
                         string ty = item.Groups["type1"].ToString();
-
+						
                         var category = db.MovieCategories.Where(m => m.CategoryName == ty).FirstOrDefault();
                         if (category != null)
                         {
@@ -199,9 +211,14 @@ namespace BtService
                 }
 
                 //演员
-                string action = @"<a href='/search/(?<action>.*?).html'>(?<action>.*?)</a>&nbsp;&nbsp;";
+                string action = @"<a href='/search/(?<action>.*?).html'>(?<action>.*?)</a>";
 
                 cols = Regex.Matches(base.HtmlCont, action);
+
+				if (movie != null && cols.Count > 0)
+				{
+					model.Stars = String.Empty;
+				}
 
                 foreach (Match item in cols)
                 {
@@ -228,7 +245,7 @@ namespace BtService
                 }
 
                 //ImdbLink
-                var imdb = @"<dt>imdb：</dt><dd><a href=""(?<url>.*?)"" target=""_blank"" rel=""nofollow"">(?<name>.*?)</a></dd>";
+                var imdb = @"<dt>imdb:</dt><dd><a href=""(?<url>.*?)"" target=""_blank"" rel=""nofollow"">(?<name>.*?)</a></dd>";
                 r = new Regex(imdb, RegexOptions.None);
                 match = r.Match(base.HtmlCont);
 
@@ -239,7 +256,8 @@ namespace BtService
                 }
 
                 //磁力
-                var me = @"<li><a title=""(?<name>.*?)"" href=""(?<url>.*?)"" target=""_blank"" class=""ico_1"">(?<name>.*?)<span class=""bt"">种子</span></a><span><a class=""d1"" href=""(?<magnet>.*?)"">磁力</a></span></li>";
+				
+                var me = @"<li><a title=""(?<name>.*?)"" href=""(?<url>.*?)"" target=""_blank"" class=""ico_1"">(?<name>.*?)<span class=""bt"">详情</span></a><span><a class=""d1"" href=""(?<magnet>.*?)"">磁力</a></span></li>";
 
                 cols = Regex.Matches(base.HtmlCont, me);
                 model.MovieLinks = new List<MovieLink>();
@@ -252,23 +270,24 @@ namespace BtService
                     model.Magnet = item.Groups["magnet"].ToString();
                     try
                     {
-                        var strCont = client.DownloadString("http://www.btbtdy.com" + item.Groups["url"].ToString());
+						//var strCont = client.DownloadString("http://www.btbtdy.me" + item.Groups["url"].ToString());
 
-                        string zj = @"<a class=""className"" href=""(?<url>.*?)"" target=""_blank"">种子①</a>";
-                        r = new Regex(zj, RegexOptions.None);
-                        match = r.Match(strCont);
+						//string zj = @"<a class=""className"" href=""(?<url>.*?)"" target=""_blank"">种子①</a>";
+						//r = new Regex(zj, RegexOptions.None);
+						//match = r.Match(strCont);
 
-                        if (match.Success)
-                        {
-                            model.MovieLinks.Add(new MovieLink()
-                            {
-                                LinkUrl = match.Groups["url"].ToString(),
-                                LinkName = item.Groups["name"].ToString(),
-                                Magnet = item.Groups["magnet"].ToString(),
-                                DownloadCount = 0
-                            });
-                        }
-                    }
+						//if (match.Success)
+						//{
+						model.MovieLinks.Add(new MovieLink()
+						{
+							LinkUrl = "",//match.Groups["url"].ToString(),
+							LinkName = item.Groups["name"].ToString(),
+							Magnet = item.Groups["magnet"].ToString(),
+							DownloadCount = 0
+						});
+						//}
+
+					}
                     catch (Exception e)
                     {
                         
@@ -284,7 +303,6 @@ namespace BtService
                 {
                     model.MovieContent = match.Groups["content"].ToString();
                 }
-
             }
             Err = false;
             return model;

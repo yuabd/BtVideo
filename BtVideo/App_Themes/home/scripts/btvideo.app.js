@@ -27,7 +27,7 @@ $(function () {
     //    var n = "/search/" + $("#txtSearch").val();
     //    window.location.href = n;
     //});
-
+	rator.registerRatingButtons();
 });
 
 commentBlowUp = function () { alert("Comment failed.") };

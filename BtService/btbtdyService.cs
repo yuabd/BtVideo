@@ -28,7 +28,7 @@ namespace BtService
 
 					try
 					{
-						var url = "http://www.btbtdy.com/btdy/dy" + task.CurrentID + ".html";
+						var url = "http://www.btbtdy.me/btdy/dy" + task.CurrentID + ".html";
 						btbtdy b = new btbtdy(url);
 
 						bool err = false;
@@ -37,11 +37,6 @@ namespace BtService
 
 						if (err)
 						{
-							//task.CurrentID += 1;
-							//task.UpdateDate = DateTime.Now;
-
-							//db.SaveChanges();
-
 							return;
 						}
 
@@ -53,7 +48,7 @@ namespace BtService
 						try
 						{
 							WebClient client = new WebClient();
-							byte[] bytes = client.DownloadData(new Uri("http://www.btbtdy.com/include/ajax.php?id=" + task.CurrentID + "&action=videoscore&timestamp=1497498303965"));
+							byte[] bytes = client.DownloadData(new Uri("http://www.btbtdy.me/include/ajax.php?id=" + task.CurrentID + "&action=videoscore&timestamp=1497498303965"));
 							StringBuilder sb = new StringBuilder();
 							using (MemoryStream ms = new MemoryStream(bytes))
 							{
@@ -68,30 +63,34 @@ namespace BtService
 						catch (Exception)
 						{
 						}
+						if(blog.MovieID > 0)
+						{
 
-						db.Movies.Add(blog);
+						}
+						else
+							db.Movies.Add(blog);
 
 						db.SaveChanges();
 
-						try
-						{
-							if (!string.IsNullOrWhiteSpace(blog.PictureFile))
-							{
-								WebClient client = new WebClient();
-								byte[] bytes = client.DownloadData(new Uri(blog.PictureFile));
-								blog.PictureFile = DateTime.Now.ToString("yyyyMM") + "/" + blog.MovieID + ".jpg";
-								using (MemoryStream ms = new MemoryStream(bytes))
-								{
-									ms.Seek(0, SeekOrigin.Begin);
-									ms.WriteTo(new FileStream("C:/www/btmovie/Content/Pictures/Blog/" + blog.PictureFile, FileMode.OpenOrCreate));
-								}
+						//try
+						//{
+						//	if (!string.IsNullOrWhiteSpace(blog.PictureFile))
+						//	{
+						//		WebClient client = new WebClient();
+						//		byte[] bytes = client.DownloadData(new Uri(blog.PictureFile));
+						//		blog.PictureFile = DateTime.Now.ToString("yyyyMM") + "/" + blog.MovieID + ".jpg";
+						//		using (MemoryStream ms = new MemoryStream(bytes))
+						//		{
+						//			ms.Seek(0, SeekOrigin.Begin);
+						//			ms.WriteTo(new FileStream("C:/www/btmovie/Content/Pictures/Blog/" + blog.PictureFile, FileMode.OpenOrCreate));
+						//		}
 
-								db.SaveChanges();
-							}
-						}
-						catch (Exception)
-						{
-						}
+						//		db.SaveChanges();
+						//	}
+						//}
+						//catch (Exception)
+						//{
+						//}
 
 						//加入明星
 						MovieStar star = null;
